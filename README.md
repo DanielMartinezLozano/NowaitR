@@ -13,5 +13,8 @@ It can be used both for ordering directly from the table without the need of cal
 - React Native
 - Jest
 - TypeScript
+- Express.js
+- MongoDB
+- Mongoose
 - Git
 - SonarQube
