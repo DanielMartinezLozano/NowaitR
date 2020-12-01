@@ -1,4 +1,4 @@
-interface Styles {
+interface StylesType {
   black: string;
   brown: string;
   blue: string;
@@ -6,7 +6,7 @@ interface Styles {
   green: string;
 }
 
-const styles: Styles = {
+const stylesType: StylesType = {
   black: '#303030',
   brown: '#ffa591',
   blue: '#8ae6ff',
@@ -14,4 +14,4 @@ const styles: Styles = {
   green: '#E5F77D'
 }
 
-export default styles
+export default stylesType

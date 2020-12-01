@@ -1,9 +1,9 @@
+/* eslint-disable max-lines-per-function */
 /* eslint-disable react/jsx-no-bind */
 import React, { useEffect } from 'react'
-import { StyleSheet, View, Text, FlatList } from 'react-native'
-import { ListItem } from 'react-native-elements'
+import { StyleSheet, View, Text, FlatList, Image } from 'react-native'
 import { connect } from 'react-redux'
-import styles from '../../../styles/styles'
+import stylesType from '../../../styles/stylesType'
 import Icon from 'react-native-vector-icons/Feather'
 import { loadProductList } from '../../redux/actions/productsActions'
 
@@ -31,7 +31,7 @@ function Products ({ products, dispatch }: Props) {
 
   return (
       <View>
-          <Text style={style.title}>
+          <Text style={styles.title}>
               {' '}
               <Icon
                   name="arrow-left-circle"
@@ -42,15 +42,26 @@ function Products ({ products, dispatch }: Props) {
                   Products
               </Text>
           </Text>
-          <View style={style.container}>
+          <View style={styles.container}>
               {products && products.length &&
               <FlatList
                   data={products}
                   keyExtractor={(item: Product) => item.name}
                   renderItem={({ item }) => (
-                      <View style={style.productView}>
-                          <Text>
+                      <View style={styles.productView}>
+                          <View style={styles.imageContainer}>
+                              <Image
+                                  source={{ uri: item.img }}
+                                  style={styles.image}
+                              />
+                          </View>
+                          <Text style={styles.productTitle}>
                               {item.name}
+                          </Text>
+                          <Text style={styles.price}>
+                              {item.price.toFixed(2)}
+                              {' '}
+                              €
                           </Text>
                       </View>
                   )}
@@ -60,13 +71,13 @@ function Products ({ products, dispatch }: Props) {
   )
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
   },
   productView: {
     borderWidth: 1,
-    borderColor: styles.black,
-    width: '40%',
+    borderColor: stylesType.black,
+    width: '45%',
     padding: 30
   },
   list: {
@@ -75,19 +86,35 @@ const style = StyleSheet.create({
   },
   item: {
     backgroundColor: '#202020',
-    margin: 10,
-    width: '30%'
+    margin: 10
   },
   title: {
-    color: styles.black,
+    color: stylesType.black,
     fontSize: 32,
     fontStyle: 'normal',
     fontWeight: 'bold',
     lineHeight: 42,
     padding: 30
   },
-  name: {
-    color: styles.black
+  productTitle: {
+    color: stylesType.black,
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  price: {
+    color: '#CD3B3B'
+  },
+  imageContainer: {
+    height: 100,
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: 10,
+    marginTop: -10
+  },
+  image: {
+    position: 'relative',
+    resizeMode: 'contain',
+    height: 100
   }
 })
 

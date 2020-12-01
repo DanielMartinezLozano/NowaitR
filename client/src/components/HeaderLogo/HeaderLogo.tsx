@@ -1,7 +1,7 @@
 import { Image, StyleSheet } from 'react-native'
 import { Header } from 'react-native-elements'
 import React from 'react'
-import styles from '../../../styles/styles'
+import stylesType from '../../../styles/stylesType'
 
 export default function HeaderLogo () {
   return (
@@ -13,18 +13,18 @@ export default function HeaderLogo () {
               // eslint-disable-next-line max-len
               'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4dc9993cb2246bcf252be/b8740e39ac1a9c32d6142c96dde0b757/nowaitr-row-logo.png'
                   }}
-                  style={style.logo}
+                  style={styles.logo}
               />
       }
-          containerStyle={style.container}
+          containerStyle={styles.container}
           placement="center"
       />
   )
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
-    backgroundColor: styles.yellow,
+    backgroundColor: stylesType.yellow,
     elevation: 2,
     height: 100,
     shadowColor: '#000',
