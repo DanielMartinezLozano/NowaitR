@@ -5,7 +5,7 @@ import Products from './src/components/Products/Products'
 import configureStore from './src/redux/configureStore'
 
 const store = configureStore()
-
+// en daniel es posa nervios
 export default function App () {
   return (
     <Provider store={store}>
