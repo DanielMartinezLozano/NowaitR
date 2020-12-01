@@ -27,6 +27,10 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
+    'func-style': errorLevel.off,
+    'no-console': errorLevel.warn,
+    'no-debugger': errorLevel.warn,
+    'no-magic-numbers': errorLevel.off,
     'no-use-before-define': errorLevel.off,
     'react/forbid-component-props': errorLevel.off,
     'react/jsx-filename-extension': [
@@ -37,7 +41,10 @@ module.exports = {
           '.jsx'
         ]
       }
-    ]
+    ],
+    'react/jsx-no-literals': errorLevel.off,
+    'sort-imports': errorLevel.off,
+    'sort-keys': errorLevel.off
 
   },
   settings: {

@@ -1,9 +1,9 @@
 {
   "scheme": null,
-  "hostType": "localhost",
+  "hostType": "lan",
   "lanType": "ip",
-  "dev": true,
-  "minify": false,
+  "dev": false,
+  "minify": true,
   "urlRandomness": null,
   "https": false
 }

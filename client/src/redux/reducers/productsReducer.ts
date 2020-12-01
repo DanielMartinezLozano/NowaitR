@@ -1,9 +1,7 @@
-// import actionTypes from '../actions/action-types';
-
+/* eslint-disable default-param-last */
 import actionTypes from '../actions/action-types'
 
 const initialState = {}
-// let productTypes;
 
 export default function productsReducer (state = initialState, action) {
   switch (action.type) {

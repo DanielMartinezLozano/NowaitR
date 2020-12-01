@@ -1,6 +1,7 @@
 const express = require('express')
 const debug = require('debug')('app')
 const chalk = require('chalk')
+const cors = require('cors')
 const morgan = require('morgan')
 const { connect } = require('mongoose')
 const bodyParser = require('body-parser')
@@ -12,6 +13,7 @@ const productRouter = require('./src/routes/productRouter')(Product)
 const userRouter = require('./src/routes/UserRouter')(User)
 
 const app = express()
+app.use(cors())
 const port = process.env.PORT || 4500
 const dataBaseURL = 'mongodb+srv://daniel:admin@nowaitr.w6gix.mongodb.net/NowaitR?retryWrites=true&w=majority'
 connect(dataBaseURL, { useNewUrlParser: true, useUnifiedTopology: true })
