@@ -4,6 +4,6 @@
   "lanType": "ip",
   "dev": true,
   "minify": false,
-  "urlRandomness": "4g-p9v",
+  "urlRandomness": null,
   "https": false
 }
