@@ -1,7 +1,8 @@
+/* eslint-disable react/jsx-max-depth */
 /* eslint-disable max-lines-per-function */
 /* eslint-disable react/jsx-no-bind */
 import React, { useEffect } from 'react'
-import { StyleSheet, View, Text, FlatList, Image } from 'react-native'
+import { StyleSheet, View, Text, FlatList, Image, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import stylesType from '../../../styles/stylesType'
 import Icon from 'react-native-vector-icons/Feather'
@@ -30,7 +31,7 @@ function Products ({ products, dispatch }: Props) {
   )
 
   return (
-      <View>
+      <View style={styles.body}>
           <Text style={styles.title}>
               {' '}
               <Icon
@@ -46,7 +47,9 @@ function Products ({ products, dispatch }: Props) {
               {products && products.length &&
               <FlatList
                   data={products}
+                  horizontal={false}
                   keyExtractor={(item: Product) => item.name}
+                  numColumns={2}
                   renderItem={({ item }) => (
                       <View style={styles.productView}>
                           <View style={styles.imageContainer}>
@@ -63,6 +66,29 @@ function Products ({ products, dispatch }: Props) {
                               {' '}
                               €
                           </Text>
+                          <View style={styles.buttons}>
+                              <TouchableOpacity
+                                  style={styles.button}
+                              >
+                                  <Icon
+                                      color="#FFF"
+                                      name="minus"
+                                      size={30}
+                                  />
+                              </TouchableOpacity>
+                              <Text style={styles.quantity}>
+                                  0
+                              </Text>
+                              <TouchableOpacity
+                                  style={styles.button}
+                              >
+                                  <Icon
+                                      color="#FFF"
+                                      name="plus"
+                                      size={30}
+                                  />
+                              </TouchableOpacity>
+                          </View>
                       </View>
                   )}
               />}
@@ -72,13 +98,39 @@ function Products ({ products, dispatch }: Props) {
 }
 
 const styles = StyleSheet.create({
+  body: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    margin: 0,
+    height: 'auto'
+  },
   container: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    height: 'auto',
+    flexGrow: 1,
+    flex: 1,
+    margin: 10
   },
   productView: {
-    borderWidth: 1,
-    borderColor: stylesType.black,
+    display: 'flex',
+    flexDirection: 'column',
     width: '45%',
-    padding: 30
+    margin: 5,
+    padding: 30,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
+    backgroundColor: '#FFF'
   },
   list: {
     display: 'flex',
@@ -115,6 +167,25 @@ const styles = StyleSheet.create({
     position: 'relative',
     resizeMode: 'contain',
     height: 100
+  },
+  buttons: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10
+  },
+  button: {
+    backgroundColor: stylesType.brown,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    margin: 10
+  },
+  quantity: {
+    fontSize: 30
   }
 })
 

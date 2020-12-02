@@ -7,7 +7,8 @@ const errorLevel = {
 module.exports = {
   env: {
     browser: true,
-    es2021: true
+    es2021: true,
+    jest: true
   },
   extends: [
     'eslint:all',
@@ -27,6 +28,7 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
+    'max-len': errorLevel.off,
     'func-style': errorLevel.off,
     'no-console': errorLevel.warn,
     'no-debugger': errorLevel.warn,

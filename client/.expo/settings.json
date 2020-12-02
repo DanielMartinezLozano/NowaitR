@@ -2,8 +2,8 @@
   "scheme": null,
   "hostType": "lan",
   "lanType": "ip",
-  "dev": false,
-  "minify": true,
-  "urlRandomness": null,
+  "dev": true,
+  "minify": false,
+  "urlRandomness": "4g-p9v",
   "https": false
 }

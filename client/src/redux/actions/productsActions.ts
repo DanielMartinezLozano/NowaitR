@@ -1,7 +1,7 @@
 import axios from 'axios'
 import actionTypes from './action-types'
 
-const productsURL = 'http://localhost:4500/products'
+const productsURL = 'http://192.168.0.34:4500/products'
 
 export function loadProductsSuccess (productsList) {
   return {
