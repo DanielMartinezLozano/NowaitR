@@ -10,13 +10,20 @@ export function loadProductsSuccess(productsList) {
   };
 }
 
+export function loadProductsError(error) {
+  return {
+    error,
+    type: actionTypes.LOAD_PRODUCTS_ERROR,
+  };
+}
+
 export function loadProductList() {
   return async (dispatch) => {
     try {
       const productsList = await axios.get(productsURL);
       dispatch(loadProductsSuccess(productsList.data));
     } catch (error) {
-      console.log(error);
+      dispatch(loadProductsError(error));
     }
   };
 }
