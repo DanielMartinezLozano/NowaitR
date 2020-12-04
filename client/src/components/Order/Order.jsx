@@ -73,6 +73,10 @@ function Order({ orderList, dispatch }) {
           </View>
         )}
       />
+      <View style={styles.totalContainer}>
+        <Text style={styles.totalText}>Total:</Text>
+        <Text style={styles.totalAmount}>$$$$</Text>
+      </View>
       <TouchableOpacity style={styles.submit}>
         <Text style={styles.submitText}>Enviar pedido a cocina</Text>
         <Icon

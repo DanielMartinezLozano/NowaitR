@@ -111,6 +111,25 @@ const styles = {
     fontWeight: '600',
     marginRight: 10,
   },
+  totalContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    marginBottom: 20,
+    padding: 30,
+    justifyContent: 'flex-end',
+  },
+  totalText: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#202020',
+    marginRight: 10,
+  },
+  totalAmount: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#202020',
+  },
 };
 
 export default styles;
