@@ -12,6 +12,8 @@ function userRouter (User) {
 
   router.route('/:userId')
     .get(user.getMethod)
+    .patch(user.patchMethod)
+    .delete(user.deleteMethod)
 
   return router
 }

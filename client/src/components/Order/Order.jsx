@@ -1,92 +1,101 @@
 import React, { useEffect } from 'react';
-import { Text, View, FlatList } from 'react-native';
+import {
+  Text, View, FlatList,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Icon from 'react-native-vector-icons/EvilIcons';
+import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { loadOrderProductsList } from '../../redux/actions/productsActions';
 import styles from './OrderStyles';
 
-function Order({ orderProducts, dispatch }) {
+function Order({ orderList, dispatch }) {
   const navigation = useNavigation();
 
-  useEffect(
-    () => {
-      if (!orderProducts || !orderProducts.length) {
-        dispatch(loadProductList());
-      }
-    },
-    [],
-  );
+  useEffect(() => {
+    if (!orderList || !orderList.length) {
+      dispatch(loadOrderProductsList());
+    }
+  },
+  []);
 
   return (
-    <FlatList
-      ListHeaderComponent={(
-        <View style={styles.titleContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.dispatch(CommonActions.goBack())}
-          >
-            <Icon
-              name="close"
-              size={32}
-            />
-          </TouchableOpacity>
-          <Text style={styles.title}>Mi Pedido</Text>
-        </View>
+    orderList.length !== 0
+    && (
+    <View style={{ flex: 1 }}>
+      <FlatList
+        ListHeaderComponent={(
+          <View style={styles.titleContainer}>
+            <TouchableOpacity
+              onPress={() => navigation.dispatch(CommonActions.goBack())}
+            >
+              <Icon
+                name="close"
+                size={32}
+              />
+            </TouchableOpacity>
+            <Text style={styles.title}>Mi Pedido</Text>
+          </View>
     )}
-      data={orderProducts}
-      horizontal={false}
-      keyExtractor={(item) => item.name}
-      numColumns={2}
-      renderItem={({ item }) => (
-        <View style={styles.productView}>
-          <View style={styles.imageContainer}>
-            <Image
-              source={{ uri: item.img }}
-              style={styles.image}
-            />
+        data={orderList}
+        horizontal={false}
+        keyExtractor={(item) => item.product.name}
+        renderItem={({ item }) => (
+          <View style={styles.productView}>
+            <View style={styles.buttons}>
+              <TouchableOpacity
+                style={styles.button}
+              >
+                <Icon
+                  color="#FFF"
+                  name="minus"
+                  size={30}
+                />
+              </TouchableOpacity>
+              <Text style={styles.quantity}>{item.quantity}</Text>
+              <TouchableOpacity
+                style={styles.button}
+              >
+                <Icon
+                  color="#FFF"
+                  name="plus"
+                  size={30}
+                />
+              </TouchableOpacity>
+              <View style={styles.productInfo}>
+                <Text style={styles.productTitle}>{item.product.name}</Text>
+                <Text style={styles.price}>{`${item.product.price.toFixed(2)} €`}</Text>
+              </View>
+            </View>
           </View>
-          <Text style={styles.productTitle}>{item.name}</Text>
-          <Text style={styles.price}>{`${item.price.toFixed(2)} €`}</Text>
-          <View style={styles.buttons}>
-            <TouchableOpacity
-              style={styles.button}
-            >
-              <Icon
-                color="#FFF"
-                name="minus"
-                size={30}
-              />
-            </TouchableOpacity>
-            <Text style={styles.quantity}>0</Text>
-            <TouchableOpacity
-              style={styles.button}
-            >
-              <Icon
-                color="#FFF"
-                name="plus"
-                size={30}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-      )}
-    />
+        )}
+      />
+      <TouchableOpacity style={styles.submit}>
+        <Text style={styles.submitText}>Enviar pedido a cocina</Text>
+        <Icon
+          name="arrowright"
+          size={32}
+          color="white"
+        />
+      </TouchableOpacity>
+    </View>
+    )
   );
 }
 
 Order.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  orderProducts: PropTypes.arrayOf(PropTypes.object),
+  orderList: PropTypes.arrayOf(PropTypes.object),
 };
 
 Order.defaultProps = {
-  orderProducts: [],
+  orderList: [],
 };
 
-function mapStateToProps({ productsReducer }) {
+function mapStateToProps({ orderReducer }) {
   return {
-    orderProducts: productsReducer.productsList,
+    orderList: orderReducer.orderList,
   };
 }
 

@@ -4,17 +4,23 @@ import {
   View, Text, FlatList, Image, TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/AntDesign';
 import PropTypes from 'prop-types';
 import styles from './ProductsStyles';
-import { loadProductList } from '../../redux/actions/productsActions';
+import { loadProductList, loadOrderProductsList } from '../../redux/actions/productsActions';
 import FooterNav from '../FooterNav/FooterNav';
+import productQuantity from './productQuantity';
 
-function Products({ products, dispatch }) {
+function Products({
+  products, orderList, orderSize, dispatch,
+}) {
   useEffect(
     () => {
       if (!products || !products.length) {
         dispatch(loadProductList());
+      }
+      if (!orderList || !orderList.length) {
+        dispatch(loadOrderProductsList());
       }
     },
     [],
@@ -30,7 +36,7 @@ function Products({ products, dispatch }) {
                 <Text style={styles.title}>
                   {' '}
                   <Icon
-                    name="arrow-left-circle"
+                    name="arrowleft"
                     size={32}
                   />
                   {' '}
@@ -62,7 +68,7 @@ function Products({ products, dispatch }) {
                       size={30}
                     />
                   </TouchableOpacity>
-                  <Text style={styles.quantity}>0</Text>
+                  <Text style={styles.quantity}>{productQuantity(item, orderList)}</Text>
                   <TouchableOpacity
                     style={styles.button}
                   >
@@ -78,7 +84,7 @@ function Products({ products, dispatch }) {
           />
         )}
       </View>
-      <FooterNav />
+      <FooterNav orderSize={orderSize} />
     </View>
   );
 }
@@ -86,15 +92,20 @@ function Products({ products, dispatch }) {
 Products.propTypes = {
   dispatch: PropTypes.func.isRequired,
   products: PropTypes.arrayOf(PropTypes.object),
+  orderList: PropTypes.arrayOf(PropTypes.object),
+  orderSize: PropTypes.number.isRequired,
 };
 
 Products.defaultProps = {
   products: [],
+  orderList: [],
 };
 
-function mapStateToProps({ productsReducer }) {
+function mapStateToProps({ productsReducer, orderReducer }) {
   return {
     products: productsReducer.productsList,
+    orderList: orderReducer.orderList,
+    orderSize: orderReducer.orderSize,
   };
 }
 

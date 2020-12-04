@@ -4,15 +4,16 @@ import {
 import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
+import PropTypes from 'prop-types';
 import styles from './FooterNavStyles';
 
-function FooterNav() {
+function FooterNav({ orderSize }) {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <View style={styles.productsContainer}>
-        <Text style={styles.products}>0</Text>
+        <Text style={styles.products}>{orderSize}</Text>
         <Text style={styles.products}>Products</Text>
       </View>
       <TouchableOpacity
@@ -34,5 +35,9 @@ function FooterNav() {
     </View>
   );
 }
+
+FooterNav.propTypes = {
+  orderSize: PropTypes.number.isRequired,
+};
 
 export default FooterNav;
