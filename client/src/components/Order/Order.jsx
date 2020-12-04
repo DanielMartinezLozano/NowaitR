@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { loadOrderProductsList } from '../../redux/actions/productsActions';
+import { addOrderProduct, loadOrderProductsList, deleteOrderProduct } from '../../redux/actions/productsActions';
 import styles from './OrderStyles';
 
 function Order({ orderList, dispatch }) {
@@ -46,6 +46,7 @@ function Order({ orderList, dispatch }) {
             <View style={styles.buttons}>
               <TouchableOpacity
                 style={styles.button}
+                onPress={() => dispatch(deleteOrderProduct(item.product))}
               >
                 <Icon
                   color="#FFF"
@@ -56,6 +57,7 @@ function Order({ orderList, dispatch }) {
               <Text style={styles.quantity}>{item.quantity}</Text>
               <TouchableOpacity
                 style={styles.button}
+                onPress={() => dispatch(addOrderProduct(item.product))}
               >
                 <Icon
                   color="#FFF"
@@ -65,7 +67,7 @@ function Order({ orderList, dispatch }) {
               </TouchableOpacity>
               <View style={styles.productInfo}>
                 <Text style={styles.productTitle}>{item.product.name}</Text>
-                <Text style={styles.price}>{`${item.product.price.toFixed(2)} €`}</Text>
+                <Text style={styles.price}>{`${item.product.price?.toFixed(2)} €`}</Text>
               </View>
             </View>
           </View>

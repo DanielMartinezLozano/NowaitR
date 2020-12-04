@@ -55,3 +55,63 @@ export function loadOrderProductsList() {
     }
   };
 }
+
+export function addOrderProductError(error) {
+  return {
+    error,
+    type: actionTypes.ADD_TO_ORDER_ERROR,
+  };
+}
+
+export function addOrderProductSuccess(orderList) {
+  return {
+    type: actionTypes.ADD_TO_ORDER,
+    orderList,
+  };
+}
+
+export function addOrderProduct(product) {
+  return async (dispatch) => {
+    try {
+      // eslint-disable-next-line no-underscore-dangle
+      const productId = product._id.toString();
+      const newOrderProduct = await axios.patch(
+        userURL,
+        { _id: productId },
+      );
+      dispatch(addOrderProductSuccess(newOrderProduct.data.saved));
+    } catch (error) {
+      dispatch(addOrderProductError(error));
+    }
+  };
+}
+
+export function deleteOrderProductError(error) {
+  return {
+    error,
+    type: actionTypes.DELETE_FROM_ORDER_ERROR,
+  };
+}
+
+export function deleteOrderProductSuccess(orderList) {
+  return {
+    type: actionTypes.DELETE_FROM_ORDER,
+    orderList,
+  };
+}
+
+export function deleteOrderProduct(product) {
+  return async (dispatch) => {
+    try {
+      // eslint-disable-next-line no-underscore-dangle
+      const productId = product._id.toString();
+      const newOrderProduct = await axios.delete(
+        userURL,
+        { data: { _id: productId } },
+      );
+      dispatch(deleteOrderProductSuccess(newOrderProduct.data.saved));
+    } catch (error) {
+      dispatch(deleteOrderProductError(error));
+    }
+  };
+}

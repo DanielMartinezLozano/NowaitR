@@ -11,6 +11,20 @@ export default function orderReducer(state = initialState, action) {
         orderSize: action.orderList.reduce((acc, cur) => acc + cur.quantity, 0),
       };
 
+    case actionTypes.ADD_TO_ORDER:
+      return {
+        ...state,
+        orderList: [...action.orderList],
+        orderSize: action.orderList.reduce((acc, cur) => acc + cur.quantity, 0),
+      };
+
+    case actionTypes.DELETE_FROM_ORDER:
+      return {
+        ...state,
+        orderList: [...action.orderList],
+        orderSize: action.orderList.reduce((acc, cur) => acc + cur.quantity, 0),
+      };
+
     default:
       return state;
   }

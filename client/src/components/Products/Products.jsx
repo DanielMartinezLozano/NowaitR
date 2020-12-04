@@ -7,7 +7,10 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import PropTypes from 'prop-types';
 import styles from './ProductsStyles';
-import { loadProductList, loadOrderProductsList } from '../../redux/actions/productsActions';
+import {
+  loadProductList, loadOrderProductsList, addOrderProduct,
+  deleteOrderProduct,
+} from '../../redux/actions/productsActions';
 import FooterNav from '../FooterNav/FooterNav';
 import productQuantity from './productQuantity';
 
@@ -61,6 +64,7 @@ function Products({
                 <View style={styles.buttons}>
                   <TouchableOpacity
                     style={styles.button}
+                    onPress={() => dispatch(deleteOrderProduct(item))}
                   >
                     <Icon
                       color="#FFF"
@@ -71,6 +75,7 @@ function Products({
                   <Text style={styles.quantity}>{productQuantity(item, orderList)}</Text>
                   <TouchableOpacity
                     style={styles.button}
+                    onPress={() => dispatch(addOrderProduct(item))}
                   >
                     <Icon
                       color="#FFF"

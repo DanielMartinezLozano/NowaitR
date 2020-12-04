@@ -26,7 +26,7 @@ function userController (User) {
       }
       success.save()
       res.send(success)
-    })
+    }).populate('saved.product')
   }
 
   function deleteMethod (req, res) {
@@ -48,7 +48,7 @@ function userController (User) {
       }
       success.save()
       res.send(success)
-    })
+    }).populate('saved.product')
   }
 
   return { getMethod, patchMethod, deleteMethod }
