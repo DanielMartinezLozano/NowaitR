@@ -4,25 +4,27 @@ import stylesType from '../../../styles/stylesType';
 const styles = StyleSheet.create({
   body: {
     display: 'flex',
+    justifyContent: 'center',
     flex: 1,
     flexDirection: 'column',
     margin: 0,
     height: 'auto',
+    width: '100%',
+    flexGrow: 1,
   },
   container: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
     width: '100%',
     height: 'auto',
     flexGrow: 1,
     flex: 1,
-    margin: 10,
+    margin: 0,
   },
   productView: {
     display: 'flex',
     flexDirection: 'column',
-    width: '45%',
+    width: '47%',
     margin: 5,
     padding: 30,
     shadowColor: '#000',
@@ -51,6 +53,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     lineHeight: 42,
     padding: 30,
+    width: '100%',
   },
   productTitle: {
     color: stylesType.black,
