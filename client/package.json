@@ -16,14 +16,18 @@
     "@testing-library/react": "^11.2.2",
     "axios": "^0.21.0",
     "expo": "~39.0.2",
+    "expo-google-app-auth": "^8.1.3",
     "expo-status-bar": "~1.0.2",
+    "firebase": "^7.9.0",
+    "google-auth-library": "^6.1.3",
+    "jest-expo": "^39.0.0",
     "native-base": "^2.13.15",
     "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
     "react-native-elements": "^3.0.0-alpha.1",
-    "react-native-gesture-handler": "^1.9.0",
+    "react-native-gesture-handler": "^1.7.0",
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
@@ -32,11 +36,13 @@
     "react-native-vector-icons": "^7.1.0",
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.2",
+    "react-test-renderer": "^17.0.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
+    "babel-preset-expo": "^8.3.0",
     "eslint": "^7.14.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.22.1",
@@ -46,6 +52,9 @@
   },
   "private": true,
   "jest": {
-    "preset": "react-native"
+    "preset": "jest-expo",
+    "transform": {
+      "\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+    }
   }
 }

@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { addOrderProduct, loadOrderProductsList, deleteOrderProduct } from '../../redux/actions/productsActions';
+import totalPrice from './totalPrice';
 import styles from './OrderStyles';
 
 function Order({ orderList, dispatch }) {
@@ -40,7 +41,8 @@ function Order({ orderList, dispatch }) {
     )}
         data={orderList}
         horizontal={false}
-        keyExtractor={(item) => item.product.name}
+        // eslint-disable-next-line no-unused-vars
+        keyExtractor={(item, _index) => item._id}
         renderItem={({ item }) => (
           <View style={styles.productView}>
             <View style={styles.buttons}>
@@ -75,7 +77,7 @@ function Order({ orderList, dispatch }) {
       />
       <View style={styles.totalContainer}>
         <Text style={styles.totalText}>Total:</Text>
-        <Text style={styles.totalAmount}>$$$$</Text>
+        <Text style={styles.totalAmount}>{`${totalPrice(orderList)} €`}</Text>
       </View>
       <TouchableOpacity style={styles.submit}>
         <Text style={styles.submitText}>Enviar pedido a cocina</Text>
