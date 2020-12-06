@@ -1,12 +1,25 @@
 import React from 'react';
-import 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import firebase from 'firebase';
+import firebaseConfig from './config';
 import configureStore from './src/redux/configureStore';
 import Products from './src/components/Products/Products';
 import HeaderLogo from './src/components/HeaderLogo/HeaderLogo';
 import Order from './src/components/Order/Order';
+import Loading from './src/components/Loading/Loading';
+import Login from './src/components/Login/Login';
+
+try {
+  firebase.initializeApp(firebaseConfig);
+} catch (err) {
+  // we skip the "already exists" message which is
+  // not an actual error when we're hot-reloading
+  if (!/already exists/.test(err.message)) {
+    console.error('Firebase initialization error', err.stack);
+  }
+}
 
 const store = configureStore();
 const Stack = createStackNavigator();
@@ -20,6 +33,8 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
+          <Stack.Screen name="loading" component={Loading} options={header} />
+          <Stack.Screen name="login" component={Login} options={header} />
           <Stack.Screen name="products" component={Products} options={header} />
           <Stack.Screen name="order" component={Order} options={header} />
         </Stack.Navigator>

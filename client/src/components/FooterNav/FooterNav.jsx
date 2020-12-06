@@ -14,7 +14,7 @@ function FooterNav({ orderSize }) {
     <View style={styles.container}>
       <View style={styles.productsContainer}>
         <Text style={styles.products}>{orderSize}</Text>
-        <Text style={styles.products}>Products</Text>
+        <Text style={styles.products}>Productos</Text>
       </View>
       <TouchableOpacity
         style={styles.waiterContainer}

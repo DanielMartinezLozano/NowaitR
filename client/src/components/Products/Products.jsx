@@ -1,11 +1,12 @@
 /* eslint-disable react/no-this-in-sfc */
 import React, { useEffect } from 'react';
 import {
-  View, Text, FlatList, Image, TouchableOpacity,
+  View, Text, FlatList, Image, TouchableOpacity, Button,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import PropTypes from 'prop-types';
+import firebase from 'firebase';
 import styles from './ProductsStyles';
 import {
   loadProductList, loadOrderProductsList, addOrderProduct,
@@ -45,11 +46,17 @@ function Products({
                   {' '}
                   <Text>Bebidas</Text>
                 </Text>
+                <Button
+                  title="Cerrar Sesión"
+                  onPress={() => firebase.auth().signOut()}
+                  style={{ fontSize: 20, color: '#202020' }}
+                />
               </View>
             )}
             data={products}
             horizontal={false}
-            keyExtractor={(item) => item.name}
+            // eslint-disable-next-line no-unused-vars
+            keyExtractor={(item, _index) => item._id}
             numColumns={2}
             renderItem={({ item }) => (
               <View style={styles.productView}>
