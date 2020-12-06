@@ -1,9 +1,19 @@
 /* eslint-disable react/destructuring-assignment */
 import { View } from 'native-base';
 import React from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import firebase from 'firebase';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default function Loading({ navigation }) {
   (function checkIfLoggedIn() {
@@ -17,7 +27,7 @@ export default function Loading({ navigation }) {
   }());
 
   return (
-    <View>
+    <View style={styles.container}>
       <ActivityIndicator size="large" />
     </View>
   );

@@ -2,11 +2,11 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { View, Button } from 'react-native';
+import { View, Button, Text } from 'react-native';
 import * as Google from 'expo-google-app-auth';
 import firebase from 'firebase';
 import styles from './LoginStyles';
-import { addUser, loadUser } from '../../redux/actions/userActions';
+import { addUser } from '../../redux/actions/userActions';
 
 export default function Login() {
   function isUserEqual(googleUser, firebaseUser) {
@@ -42,7 +42,7 @@ export default function Login() {
               addUser(result.additionalUserInfo.profile);
             }
             const { sub } = result.additionalUserInfo.profile;
-            loadUser(sub);
+            // loadUser(sub);
           },
         ).catch((error) => {
           // Handle Errors here.
@@ -81,9 +81,10 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <Button
-        title="Sign In With Google"
         onPress={() => signInWithGoogleAsync()}
-      />
+      >
+        <Text>Inicia sesión con Google</Text>
+      </Button>
     </View>
   );
 }
