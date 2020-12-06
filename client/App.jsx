@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import firebase from 'firebase';
 import firebaseConfig from './config';
 import configureStore from './src/redux/configureStore';
+import Categories from './src/components/Categories/Categories';
 import Products from './src/components/Products/Products';
 import HeaderLogo from './src/components/HeaderLogo/HeaderLogo';
 import Order from './src/components/Order/Order';
@@ -35,6 +36,7 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen name="loading" component={Loading} options={header} />
           <Stack.Screen name="login" component={Login} options={header} />
+          <Stack.Screen name="categories" component={Categories} options={header} />
           <Stack.Screen name="products" component={Products} options={header} />
           <Stack.Screen name="order" component={Order} options={header} />
         </Stack.Navigator>

@@ -19,7 +19,7 @@ export default function Loading({ navigation }) {
   (function checkIfLoggedIn() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        navigation.navigate('products');
+        navigation.navigate('categories');
       } else {
         navigation.navigate('login');
       }
