@@ -10,6 +10,7 @@ import Products from './src/components/Products/Products';
 import HeaderLogo from './src/components/HeaderLogo/HeaderLogo';
 import Order from './src/components/Order/Order';
 import Login from './src/components/Login/Login';
+import Loading from './src/components/Loading/Loading';
 
 try {
   firebase.initializeApp(firebaseConfig);
@@ -31,6 +32,13 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
+          <Stack.Screen
+            name="loading"
+            component={Loading}
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen name="login" component={Login} options={header} />
           <Stack.Screen name="categories" component={Categories} options={header} />
           <Stack.Screen name="products" component={Products} options={header} />

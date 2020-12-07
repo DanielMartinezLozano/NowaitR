@@ -12,22 +12,6 @@ import styles from './LoginStyles';
 import { addUser, loadUser } from '../../redux/actions/userActions';
 
 function Login({ dispatch, navigation, mongoUser }) {
-  function checkIfLoggedIn() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        dispatch(loadUser(user.providerData[0].uid));
-        navigation.navigate('products');
-      } else {
-        navigation.navigate('login');
-      }
-    });
-  }
-
-  const isFocused = useIsFocused();
-  useEffect(() => {
-    checkIfLoggedIn();
-  }, [isFocused]);
-
   function isUserEqual(googleUser, firebaseUser) {
     if (firebaseUser) {
       const { providerData } = firebaseUser;

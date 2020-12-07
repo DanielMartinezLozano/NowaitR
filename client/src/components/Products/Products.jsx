@@ -1,12 +1,11 @@
 /* eslint-disable react/no-this-in-sfc */
 import React, { useEffect } from 'react';
 import {
-  View, Text, FlatList, Image, TouchableOpacity, Button,
+  View, Text, FlatList, Image, TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import PropTypes from 'prop-types';
-import firebase from 'firebase';
 import styles from './ProductsStyles';
 import {
   loadProductList, loadOrderProductsList, addOrderProduct,
@@ -29,12 +28,11 @@ function Products({
 
   useEffect(
     () => {
-      if (!orderList?.length && mongoUser.sub) {
-        console.log('hola');
+      if (mongoUser.sub) {
         dispatch(loadOrderProductsList(mongoUser));
       }
     },
-    [orderList, mongoUser],
+    [mongoUser, orderList?.length],
   );
 
   return (
@@ -53,11 +51,6 @@ function Products({
                   {' '}
                   <Text>Bebidas</Text>
                 </Text>
-                <Button
-                  title="Cerrar Sesión"
-                  onPress={() => firebase.auth().signOut()}
-                  style={{ fontSize: 20, color: '#202020' }}
-                />
               </View>
             )}
             data={products}

@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: stylesType.yellow,
     elevation: 2,
-    height: 100,
+    height: 80,
     shadowColor: '#000',
     shadowOffset: {
       height: 1,
@@ -15,8 +15,14 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
   },
   logo: {
-    height: 200,
+    height: 35,
     width: 200,
+  },
+  logout: {
+    height: 30,
+    width: 30,
+    padding: 0,
+    marginTop: 5,
   },
 });
 
