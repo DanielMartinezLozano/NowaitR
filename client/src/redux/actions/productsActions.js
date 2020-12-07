@@ -1,9 +1,9 @@
 import axios from 'axios';
 import actionTypes from './action-types';
 
-const productsURL = 'http://192.168.0.34:4500/products';
-const authURL = 'http://192.168.0.34:4500/users/auth/';
-const userURL = 'http://192.168.0.34:4500/users/';
+const productsURL = 'http://192.168.1.122:4500/products';
+const authURL = 'http://192.168.1.122:4500/users/auth/';
+const userURL = 'http://192.168.1.122:4500/users/';
 
 export function loadProductsSuccess(productsList) {
   return {
