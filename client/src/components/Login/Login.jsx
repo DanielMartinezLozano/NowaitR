@@ -1,14 +1,33 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Button, Text } from 'react-native';
 import * as Google from 'expo-google-app-auth';
 import firebase from 'firebase';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { useIsFocused } from '@react-navigation/native';
 import styles from './LoginStyles';
-import { addUser } from '../../redux/actions/userActions';
+import { addUser, loadUser } from '../../redux/actions/userActions';
 
-export default function Login() {
+function Login({ dispatch, navigation, mongoUser }) {
+  function checkIfLoggedIn() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(loadUser(user.providerData[0].uid));
+        navigation.navigate('products');
+      } else {
+        navigation.navigate('login');
+      }
+    });
+  }
+
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    checkIfLoggedIn();
+  }, [isFocused]);
+
   function isUserEqual(googleUser, firebaseUser) {
     if (firebaseUser) {
       const { providerData } = firebaseUser;
@@ -39,10 +58,11 @@ export default function Login() {
         firebase.auth().signInWithCredential(credential).then(
           (result) => {
             if (result.additionalUserInfo.isNewUser) {
-              addUser(result.additionalUserInfo.profile);
+              dispatch(addUser(result.additionalUserInfo.profile));
+            } else {
+              const { sub } = result.additionalUserInfo.profile;
+              dispatch(loadUser(sub));
             }
-            const { sub } = result.additionalUserInfo.profile;
-            // loadUser(sub);
           },
         ).catch((error) => {
           // Handle Errors here.
@@ -63,7 +83,7 @@ export default function Login() {
   async function signInWithGoogleAsync() {
     try {
       const result = await Google.logInAsync({
-        // androidClientId: YOUR_CLIENT_ID_HERE,
+        androidClientId: '911481650727-16pqsb2qhep5korq3l4v239088qqb4dk.apps.googleusercontent.com',
         iosClientId: '911481650727-c5qtavkbcnuqge0o8lbnnb7mtndtrbh9.apps.googleusercontent.com',
         scopes: ['profile', 'email'],
       });
@@ -81,10 +101,29 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <Button
+        title="Inicia sesión con Google"
         onPress={() => signInWithGoogleAsync()}
-      >
-        <Text>Inicia sesión con Google</Text>
-      </Button>
+      />
     </View>
   );
 }
+
+Login.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+  mongoUser: PropTypes.shape({}),
+};
+
+Login.defaultProps = {
+  mongoUser: {},
+};
+
+function mapStateToProps({ authReducer }) {
+  return {
+    mongoUser: authReducer.user,
+  };
+}
+
+export default connect(mapStateToProps)(Login);

@@ -16,18 +16,25 @@ import FooterNav from '../FooterNav/FooterNav';
 import productQuantity from './productQuantity';
 
 function Products({
-  products, orderList, orderSize, dispatch,
+  products, orderList, orderSize, dispatch, mongoUser,
 }) {
   useEffect(
     () => {
       if (!products || !products.length) {
         dispatch(loadProductList());
       }
-      if (!orderList || !orderList.length) {
-        dispatch(loadOrderProductsList());
-      }
     },
     [],
+  );
+
+  useEffect(
+    () => {
+      if (!orderList?.length && mongoUser.sub) {
+        console.log('hola');
+        dispatch(loadOrderProductsList(mongoUser));
+      }
+    },
+    [orderList, mongoUser],
   );
 
   return (
@@ -71,7 +78,7 @@ function Products({
                 <View style={styles.buttons}>
                   <TouchableOpacity
                     style={styles.button}
-                    onPress={() => dispatch(deleteOrderProduct(item))}
+                    onPress={() => dispatch(deleteOrderProduct(item, mongoUser))}
                   >
                     <Icon
                       color="#FFF"
@@ -82,7 +89,7 @@ function Products({
                   <Text style={styles.quantity}>{productQuantity(item, orderList)}</Text>
                   <TouchableOpacity
                     style={styles.button}
-                    onPress={() => dispatch(addOrderProduct(item))}
+                    onPress={() => dispatch(addOrderProduct(item, mongoUser))}
                   >
                     <Icon
                       color="#FFF"
@@ -106,18 +113,21 @@ Products.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object),
   orderList: PropTypes.arrayOf(PropTypes.object),
   orderSize: PropTypes.number.isRequired,
+  mongoUser: PropTypes.shape({ sub: PropTypes.string }),
 };
 
 Products.defaultProps = {
   products: [],
   orderList: [],
+  mongoUser: {},
 };
 
-function mapStateToProps({ productsReducer, orderReducer }) {
+function mapStateToProps({ productsReducer, orderReducer, authReducer }) {
   return {
     products: productsReducer.productsList,
     orderList: orderReducer.orderList,
     orderSize: orderReducer.orderSize,
+    mongoUser: authReducer.user,
   };
 }
 

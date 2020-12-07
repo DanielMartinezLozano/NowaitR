@@ -11,15 +11,15 @@ import { addOrderProduct, loadOrderProductsList, deleteOrderProduct } from '../.
 import totalPrice from './totalPrice';
 import styles from './OrderStyles';
 
-function Order({ orderList, dispatch }) {
+function Order({ orderList, dispatch, mongoUser }) {
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (!orderList || !orderList.length) {
-      dispatch(loadOrderProductsList());
+    if (!orderList?.length && mongoUser?.sub) {
+      dispatch(loadOrderProductsList(mongoUser.sub));
     }
   },
-  []);
+  [orderList, mongoUser]);
 
   return (
     orderList.length !== 0
@@ -48,7 +48,7 @@ function Order({ orderList, dispatch }) {
             <View style={styles.buttons}>
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => dispatch(deleteOrderProduct(item.product))}
+                onPress={() => dispatch(deleteOrderProduct(item.product, mongoUser))}
               >
                 <Icon
                   color="#FFF"
@@ -59,7 +59,7 @@ function Order({ orderList, dispatch }) {
               <Text style={styles.quantity}>{item.quantity}</Text>
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => dispatch(addOrderProduct(item.product))}
+                onPress={() => dispatch(addOrderProduct(item.product, mongoUser))}
               >
                 <Icon
                   color="#FFF"
@@ -95,15 +95,18 @@ function Order({ orderList, dispatch }) {
 Order.propTypes = {
   dispatch: PropTypes.func.isRequired,
   orderList: PropTypes.arrayOf(PropTypes.object),
+  mongoUser: PropTypes.shape({ sub: PropTypes.string }),
 };
 
 Order.defaultProps = {
   orderList: [],
+  mongoUser: {},
 };
 
-function mapStateToProps({ orderReducer }) {
+function mapStateToProps({ orderReducer, authReducer }) {
   return {
     orderList: orderReducer.orderList,
+    mongoUser: authReducer.user,
   };
 }
 
