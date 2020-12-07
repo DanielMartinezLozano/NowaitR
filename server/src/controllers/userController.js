@@ -4,7 +4,7 @@ function userController (User) {
       .populate('favs')
       .populate('restaurant')
       .populate('saved.product')
-      .populate('sent')
+      .populate('sent.product')
       .exec((errorFindUser, user) => (errorFindUser
         ? res.send(errorFindUser)
         : res.json(user)))

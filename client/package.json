@@ -36,6 +36,7 @@
     "react-native-swipe-up-down-fix": "^1.0.8",
     "react-native-vector-icons": "^7.1.0",
     "react-native-web": "~0.13.12",
+    "react-navigation-fluid-transitions": "^0.3.2",
     "react-redux": "^7.2.2",
     "react-test-renderer": "^17.0.1",
     "redux": "^4.0.5",
