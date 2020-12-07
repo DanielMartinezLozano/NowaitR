@@ -6,7 +6,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     position: 'fixed',
-    height: 80,
+    height: 70,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -23,7 +23,7 @@ const styles = {
     flex: 1,
   },
   products: {
-    fontSize: 20,
+    fontSize: 16,
   },
   waiterContainer: {
     backgroundColor: stylesType.brown,
@@ -32,8 +32,8 @@ const styles = {
     alignItems: 'center',
     position: 'relative',
     bottom: 30,
-    height: 120,
-    width: 120,
+    height: 100,
+    width: 100,
     borderRadius: 60,
     shadowColor: '#000',
     shadowOffset: {
@@ -55,7 +55,6 @@ const styles = {
   icon: {
     height: 50,
     width: 50,
-    padding: 30,
   },
 };
 

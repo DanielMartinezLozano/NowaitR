@@ -14,7 +14,7 @@ function Loading({ dispatch, navigation }) {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         dispatch(loadUser(user.providerData[0].uid));
-        setTimeout(() => { navigation.navigate('products'); }, 3000);
+        setTimeout(() => { navigation.navigate('categories'); }, 3000);
       } else {
         navigation.navigate('login');
       }
@@ -31,7 +31,7 @@ function Loading({ dispatch, navigation }) {
       <StatusBar barStyle="dark-content" />
       <Image
         style={{ width: 200, height: 200 }}
-        source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4dc9993cb2246bcf252be/63088f0afc9bf7a3786973aaece814e5/big-vertical-logo.png' }}
+        source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4dc9993cb2246bcf252be/7b072f968b3b6d4f4f2c6ffd249e3272/big-vertical-logo.png' }}
       />
     </View>
   );

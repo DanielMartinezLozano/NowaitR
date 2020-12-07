@@ -29,7 +29,7 @@ function FooterNav({ orderSize }) {
         />
       </TouchableOpacity>
       <View style={styles.favContainer}>
-        <Icon name="heart" size={32} />
+        <Icon name="heart" size={24} />
         <Text>Favoritos</Text>
       </View>
     </View>

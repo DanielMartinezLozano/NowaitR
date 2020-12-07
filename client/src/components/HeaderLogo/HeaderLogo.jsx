@@ -21,7 +21,7 @@ function HeaderLogo() {
           source={{
             uri:
               // eslint-disable-next-line max-len
-              'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4dc9993cb2246bcf252be/ca038c621dfdfd3d99016baa3a91b008/big-horizontal-logo.png',
+              'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4dc9993cb2246bcf252be/956c8087d4b40c7ec17bc4050c39294a/big-horizontal-logo.png',
           }}
           style={styles.logo}
         />
