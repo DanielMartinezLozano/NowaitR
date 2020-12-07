@@ -1,8 +1,9 @@
 import axios from 'axios';
 import actionTypes from './action-types';
 
-const productsURL = 'http://172.20.10.4:4500/products';
-const userURL = 'http://172.20.10.4:4500/users/5fc8fc5144da28d4c664b75a'; // User?
+const productsURL = 'http://192.168.0.34:4500/products';
+const authURL = 'http://192.168.0.34:4500/users/auth/';
+const userURL = 'http://192.168.0.34:4500/users/';
 
 export function loadProductsSuccess(productsList) {
   return {
@@ -43,10 +44,10 @@ export function loadOrderProductsError(error) {
   };
 }
 
-export function loadOrderProductsList() {
+export function loadOrderProductsList(mongoUser) {
   return async (dispatch) => {
     try {
-      const user = await axios.get(userURL);
+      const user = await axios.get(`${authURL}${mongoUser.sub}`);
       const orderList = user.data.saved;
 
       dispatch(loadOrderProductsSuccess(orderList));
@@ -70,13 +71,13 @@ export function addOrderProductSuccess(orderList) {
   };
 }
 
-export function addOrderProduct(product) {
+export function addOrderProduct(product, mongoUser) {
   return async (dispatch) => {
     try {
       // eslint-disable-next-line no-underscore-dangle
       const productId = product._id.toString();
       const newOrderProduct = await axios.patch(
-        userURL,
+        `${userURL}${mongoUser._id.toString()}`,
         { _id: productId },
       );
       dispatch(addOrderProductSuccess(newOrderProduct.data.saved));
@@ -100,13 +101,13 @@ export function deleteOrderProductSuccess(orderList) {
   };
 }
 
-export function deleteOrderProduct(product) {
+export function deleteOrderProduct(product, mongoUser) {
   return async (dispatch) => {
     try {
       // eslint-disable-next-line no-underscore-dangle
       const productId = product._id.toString();
       const newOrderProduct = await axios.delete(
-        userURL,
+        `${userURL}${mongoUser._id.toString()}`,
         { data: { _id: productId } },
       );
       dispatch(deleteOrderProductSuccess(newOrderProduct.data.saved));

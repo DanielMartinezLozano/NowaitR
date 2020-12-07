@@ -5,17 +5,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import firebase from 'firebase';
 import firebaseConfig from './config';
 import configureStore from './src/redux/configureStore';
+import Categories from './src/components/Categories/Categories';
 import Products from './src/components/Products/Products';
 import HeaderLogo from './src/components/HeaderLogo/HeaderLogo';
 import Order from './src/components/Order/Order';
-import Loading from './src/components/Loading/Loading';
 import Login from './src/components/Login/Login';
 
 try {
   firebase.initializeApp(firebaseConfig);
 } catch (err) {
-  // we skip the "already exists" message which is
-  // not an actual error when we're hot-reloading
   if (!/already exists/.test(err.message)) {
     throw ('Firebase initialization error', err.stack);
   }
@@ -33,8 +31,8 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="loading" component={Loading} options={header} />
           <Stack.Screen name="login" component={Login} options={header} />
+          <Stack.Screen name="categories" component={Categories} options={header} />
           <Stack.Screen name="products" component={Products} options={header} />
           <Stack.Screen name="order" component={Order} options={header} />
         </Stack.Navigator>

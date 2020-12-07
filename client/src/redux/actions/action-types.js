@@ -9,6 +9,8 @@ const actionTypes = {
   DELETE_FROM_ORDER_ERROR: 'DELETE_FROM_ORDER_ERROR',
   ADD_USER: 'ADD_USER',
   ADD_USER_ERROR: 'ADD_USER_ERROR',
+  LOAD_USER: 'LOAD_USER',
+  LOAD_USER_ERROR: 'LOAD_USER_ERROR',
 };
 
 export default actionTypes;

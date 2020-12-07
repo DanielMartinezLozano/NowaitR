@@ -51,19 +51,7 @@ function userController (User) {
     }).populate('saved.product')
   }
 
-  function postMethod (req, res) {
-    const user = req.body
-    const createCallBack = (error, newUser) => {
-      if (error) {
-        res.send(error)
-      } else {
-        res.send(newUser)
-      }
-    }
-    User.create(user, createCallBack)
-  }
-
-  return { getMethod, patchMethod, deleteMethod, postMethod }
+  return { getMethod, patchMethod, deleteMethod }
 }
 
 module.exports = userController

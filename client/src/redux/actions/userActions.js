@@ -2,7 +2,7 @@ import axios from 'axios';
 // import firebase from 'firebase';
 import actionTypes from './action-types';
 
-const usersURL = 'http://172.20.10.4:4500/users/';
+const usersURL = 'http://192.168.0.34:4500/users/auth/';
 
 export function addUserError(error) {
   return {
@@ -32,10 +32,35 @@ export function addUser(user) {
         sent: [],
         sub: user.sub,
       };
-      const newUserResponse = axios.post(usersURL, newUser);
+      const newUserResponse = axios.post(`${usersURL}${newUser.sub}`, newUser);
       dispatch(addUserSuccess(newUserResponse.data));
     } catch (error) {
       dispatch(addUserError(error));
+    }
+  };
+}
+
+export function loadUserError(error) {
+  return {
+    error,
+    type: actionTypes.LOAD_USER_ERROR,
+  };
+}
+
+export function loadUserSuccess(user) {
+  return {
+    user,
+    type: actionTypes.LOAD_USER,
+  };
+}
+
+export function loadUser(sub) {
+  return async (dispatch) => {
+    try {
+      const userResponse = await axios.get(`${usersURL}${sub}`);
+      dispatch(loadUserSuccess(userResponse.data));
+    } catch (error) {
+      dispatch(loadUserError(error));
     }
   };
 }
