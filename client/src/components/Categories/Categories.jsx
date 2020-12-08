@@ -5,13 +5,10 @@ import {
   View, Text, ImageBackground, TouchableOpacity,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
 import FooterNav from '../FooterNav/FooterNav';
 import styles from './CategoriesStyles';
 
-function Categories({ orderSize }) {
-  const navigation = useNavigation();
-
+function Categories({ orderSize, navigation }) {
   return (
     <View testID="categoriesContainer" style={styles.container}>
       <ScrollView style={styles.body}>
@@ -27,7 +24,7 @@ function Categories({ orderSize }) {
               style={styles.category}
               source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25291/670x420/0f21ca39e2465288c0cc706c869be590/primeros-category.png.jpg' }}
             >
-              <TouchableOpacity onPress={() => navigation.navigate('products')}>
+              <TouchableOpacity testID="primeros" onPress={() => navigation.navigate('products')}>
                 <Text style={styles.categoryName}>
                   Primeros
                 </Text>
@@ -37,7 +34,7 @@ function Categories({ orderSize }) {
               style={styles.category}
               source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4dc9893cb2246bcf25291/22aecdb5a54aee755a862e1171f00aa0/segundos-category.jpg' }}
             >
-              <TouchableOpacity onPress={() => navigation.navigate('products')}>
+              <TouchableOpacity testID="segundos" onPress={() => navigation.navigate('products')}>
                 <Text style={styles.categoryName}>
                   Segundos
                 </Text>
@@ -49,7 +46,7 @@ function Categories({ orderSize }) {
               style={styles.category}
               source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4dc9893cb2246bcf25291/9a3893ef3f3db2bbfc220077ec13a508/drinks-category.jpg' }}
             >
-              <TouchableOpacity onPress={() => navigation.navigate('products')}>
+              <TouchableOpacity testID="bebidas" onPress={() => navigation.navigate('products')}>
                 <Text style={styles.categoryName}>
                   Bebidas
                 </Text>
@@ -59,7 +56,7 @@ function Categories({ orderSize }) {
               style={styles.category}
               source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4dc9893cb2246bcf25291/1c7760ec833319a90b00c7ed28bdfd7a/offers-category.jpg' }}
             >
-              <TouchableOpacity onPress={() => navigation.navigate('products')}>
+              <TouchableOpacity testID="ofertas" onPress={() => navigation.navigate('products')}>
                 <Text style={styles.categoryName}>
                   Ofertas
                 </Text>
@@ -71,7 +68,7 @@ function Categories({ orderSize }) {
               style={styles.category}
               source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4dc9893cb2246bcf25291/95716fbed0d2b2ebcdf624fcc54f998b/desserts-category.jpg' }}
             >
-              <TouchableOpacity onPress={() => navigation.navigate('products')}>
+              <TouchableOpacity testID="postres" onPress={() => navigation.navigate('products')}>
                 <Text style={styles.categoryName}>
                   Postres
                 </Text>
@@ -81,7 +78,7 @@ function Categories({ orderSize }) {
               style={styles.category}
               source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4dc9893cb2246bcf25291/a94100a023489168666411809e02164d/tapas-category.jpg' }}
             >
-              <TouchableOpacity onPress={() => navigation.navigate('products')}>
+              <TouchableOpacity testID="tapas" onPress={() => navigation.navigate('products')}>
                 <Text style={styles.categoryName}>
                   Tapas
                 </Text>
@@ -97,6 +94,7 @@ function Categories({ orderSize }) {
 
 Categories.propTypes = {
   orderSize: PropTypes.number,
+  navigation: PropTypes.shape({ navigate: PropTypes.func }).isRequired,
 };
 
 Categories.defaultProps = {
