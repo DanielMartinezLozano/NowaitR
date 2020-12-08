@@ -16,7 +16,7 @@ function HeaderLogo() {
 
   return (
     <Header
-      centerComponent={(
+      leftComponent={(
         <Image
           source={{
             uri:
