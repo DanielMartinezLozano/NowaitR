@@ -47,13 +47,17 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   title: {
-    color: stylesType.black,
-    fontSize: 32,
-    fontStyle: 'normal',
-    fontWeight: 'bold',
-    lineHeight: 42,
-    padding: 30,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 20,
     width: '100%',
+  },
+  titleText: {
+    fontSize: 24,
+    color: stylesType.black,
+    fontWeight: 'bold',
+    paddingLeft: 20,
   },
   productTitle: {
     color: stylesType.black,

@@ -16,7 +16,7 @@ function Loading({ dispatch, navigation }) {
         dispatch(loadUser(user.providerData[0].uid));
         setTimeout(() => { navigation.navigate('categories'); }, 3000);
       } else {
-        navigation.navigate('login');
+        setTimeout(() => { navigation.navigate('login'); }, 3000);
       }
     });
   }

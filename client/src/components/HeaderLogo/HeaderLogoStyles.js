@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     height: 35,
-    width: 200,
+    width: 180,
   },
   logout: {
     height: 30,

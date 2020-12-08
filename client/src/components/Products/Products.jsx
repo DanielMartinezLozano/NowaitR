@@ -6,6 +6,7 @@ import {
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import PropTypes from 'prop-types';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import styles from './ProductsStyles';
 import {
   loadProductList, loadOrderProductsList, addOrderProduct,
@@ -17,6 +18,8 @@ import productQuantity from './productQuantity';
 function Products({
   products, orderList, orderSize, dispatch, mongoUser,
 }) {
+  const navigation = useNavigation();
+
   useEffect(
     () => {
       if (!products || !products.length) {
@@ -42,15 +45,17 @@ function Products({
           <FlatList
             ListHeaderComponent={(
               <View style={{ width: '100%' }}>
-                <Text style={styles.title}>
-                  {' '}
-                  <Icon
-                    name="arrowleft"
-                    size={32}
-                  />
-                  {' '}
-                  <Text>Bebidas</Text>
-                </Text>
+                <View style={styles.title}>
+                  <TouchableOpacity
+                    onPress={() => navigation.dispatch(CommonActions.goBack())}
+                  >
+                    <Icon
+                      name="arrowleft"
+                      size={32}
+                    />
+                  </TouchableOpacity>
+                  <Text style={styles.titleText}>Bebidas</Text>
+                </View>
               </View>
             )}
             data={products}

@@ -2,7 +2,7 @@ import axios from 'axios';
 // import firebase from 'firebase';
 import actionTypes from './action-types';
 
-const usersURL = 'http://192.168.1.122:4500/users/auth/';
+const usersURL = 'http://192.168.0.34:4500/users/auth/';
 
 export function addUserError(error) {
   return {
