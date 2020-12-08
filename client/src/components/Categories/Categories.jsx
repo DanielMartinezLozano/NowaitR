@@ -13,7 +13,7 @@ function Categories({ orderSize }) {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
+    <View testID="categoriesContainer" style={styles.container}>
       <ScrollView style={styles.body}>
         <ImageBackground
           source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4dc9993cb2246bcf252bc/187a250197be6825c7e7867bc246bd26/restaurant-photo.jpg' }}
@@ -96,7 +96,11 @@ function Categories({ orderSize }) {
 }
 
 Categories.propTypes = {
-  orderSize: PropTypes.number.isRequired,
+  orderSize: PropTypes.number,
+};
+
+Categories.defaultProps = {
+  orderSize: 0,
 };
 
 function mapStateToProps({ orderReducer }) {

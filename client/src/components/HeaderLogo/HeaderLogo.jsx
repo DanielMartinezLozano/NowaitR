@@ -6,7 +6,7 @@ import styles from './HeaderLogoStyles';
 
 function HeaderLogo() {
   const renderLogOut = () => (
-    <TouchableOpacity onPress={() => firebase.auth().signOut()}>
+    <TouchableOpacity testID="signOutButton" onPress={() => firebase.auth().signOut()}>
       <Image
         style={styles.logout}
         source={{ uri: 'https://cdn2.iconfinder.com/data/icons/picons-essentials/57/logout-512.png' }}
@@ -16,6 +16,7 @@ function HeaderLogo() {
 
   return (
     <Header
+      testID="HeaderLogo"
       leftComponent={(
         <Image
           source={{
