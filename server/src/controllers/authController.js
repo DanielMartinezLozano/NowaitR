@@ -12,14 +12,13 @@ function authController (User) {
 
   function postMethod (req, res) {
     const user = req.body
-    const createCallBack = (error, newUser) => {
+    User.create(user, (error, newUser) => {
       if (error) {
         res.send(error)
       } else {
         res.send(newUser)
       }
-    }
-    User.create(user, createCallBack)
+    })
   }
 
   return { getMethod, postMethod }

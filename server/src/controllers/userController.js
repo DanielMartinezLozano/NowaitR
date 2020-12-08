@@ -14,41 +14,46 @@ function userController (User) {
     const productId = req.body._id
     const query = { _id: req.params.userId }
 
-    User.findOne(query, (error, success) => {
-      if (error) {
-        return res.send(error)
-      }
-      const productFound = success.saved.find((productFound) => productFound.product._id.toString() === productId)
-      if (productFound) {
-        productFound.quantity += 1
-      } else {
-        success.saved.push({ quantity: 1, product: productId })
-      }
-      success.save()
-      res.send(success)
-    }).populate('saved.product')
+    User.findOne(query)
+      .populate('saved.product')
+      .exec(
+        (error, success) => {
+          if (error) {
+            return res.send(error)
+          }
+          const productFound = success.saved.find((productFound) => productFound.product._id.toString() === productId)
+          if (productFound) {
+            productFound.quantity += 1
+          } else {
+            success.saved.push({ quantity: 1, product: productId })
+          }
+          success.save()
+          res.send(success)
+        })
   }
 
   function deleteMethod (req, res) {
     const productId = req.body._id
     const query = { _id: req.params.userId }
 
-    User.findOne(query, (error, success) => {
-      if (error) {
-        return res.send(error)
-      }
-      const productFound = success.saved.find((productFound) => productFound.product._id.toString() === productId)
-      if (productFound) {
-        if (productFound.quantity === 1) {
-          const index = success.saved.indexOf(productFound)
-          success.saved.splice(index, 1)
-        } else {
-          productFound.quantity -= 1
+    User.findOne(query)
+      .populate('saved.product')
+      .exec((error, success) => {
+        if (error) {
+          return res.send(error)
         }
-      }
-      success.save()
-      res.send(success)
-    }).populate('saved.product')
+        const productFound = success.saved.find((productFound) => productFound.product._id.toString() === productId)
+        if (productFound) {
+          if (productFound.quantity === 1) {
+            const index = success.saved.indexOf(productFound)
+            success.saved.splice(index, 1)
+          } else {
+            productFound.quantity -= 1
+          }
+        }
+        success.save()
+        res.send(success)
+      })
   }
 
   return { getMethod, patchMethod, deleteMethod }
