@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { render } from '@testing-library/react-native';
+import { render, fireEvent } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -31,8 +31,24 @@ describe('Categories component', () => {
     const { getByTestId } = render(<Categories />, { wrapper });
 
     const response = getByTestId('categoriesContainer');
-    console.log(response);
 
     expect(response).toBeDefined();
+  });
+
+  ['primeros', 'segundos', 'bebidas', 'postres', 'ofertas', 'tapas'].forEach((category) => {
+    test('test onPress functionality', async () => {
+      const initialState = { orderReducer: { orderSize } };
+      const wrapper = wrapperFactory(initialState);
+
+      const navigation = { navigate: jest.fn() };
+
+      const { getByTestId } = render(<Categories navigation={navigation} />, { wrapper });
+
+      const button = getByTestId(category);
+
+      await fireEvent.press(button);
+
+      expect(navigation.navigate).toHaveBeenCalled();
+    });
   });
 });

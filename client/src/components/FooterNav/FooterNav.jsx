@@ -11,7 +11,7 @@ function FooterNav({ orderSize }) {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="FooterNav">
       <View style={styles.productsContainer}>
         <Text style={styles.products}>{orderSize}</Text>
         <Text style={styles.products}>Productos</Text>
@@ -19,6 +19,7 @@ function FooterNav({ orderSize }) {
       <TouchableOpacity
         style={styles.waiterContainer}
         onPress={() => navigation.navigate('order')}
+        testID="orderButton"
       >
         <Image
           source={{

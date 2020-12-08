@@ -27,7 +27,7 @@ function Loading({ dispatch, navigation }) {
   }, [isFocused]);
 
   return (
-    <View style={styles.container}>
+    <View testID="Loading" style={styles.container}>
       <StatusBar barStyle="dark-content" />
       <Image
         style={{ width: 200, height: 200 }}
