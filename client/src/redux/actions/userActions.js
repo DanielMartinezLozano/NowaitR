@@ -1,10 +1,60 @@
 import axios from 'axios';
-// import firebase from 'firebase';
+import signinWithGoogle from '../../../config';
 import actionTypes from './action-types';
 
 const usersURL = 'http://192.168.0.34:4500/users/auth/';
 
-export function addUserError(error) {
+function loginGoogleSuccess(user) {
+  return {
+    type: actionTypes.LOGIN_USER_GOOGLE,
+    user,
+  };
+}
+
+function loginGoogleError(error) {
+  return {
+    type: actionTypes.LOGIN_USER_GOOGLE_ERROR,
+    error,
+  };
+}
+
+export function loginGoogle() {
+  return async (dispatch) => {
+    try {
+      const { user } = await signinWithGoogle();
+      dispatch(loginGoogleSuccess(user));
+    } catch (error) {
+      dispatch(loginGoogleError(error));
+    }
+  };
+}
+
+function sendUserSuccess(user) {
+  return {
+    type: actionTypes.SEND_USER,
+    user,
+  };
+}
+
+function sendUserError(error) {
+  return {
+    type: actionTypes.SEND_USER_ERROR,
+    error,
+  };
+}
+
+export function sendUser(userInfo) {
+  return async (dispatch) => {
+    try {
+      const userItem = await axios.post(usersURL, userInfo);
+      dispatch(sendUserSuccess(userItem));
+    } catch (error) {
+      dispatch(sendUserError(error));
+    }
+  };
+}
+
+/* export function addUserError(error) {
   return {
     error,
     type: actionTypes.ADD_USER_ERROR,
@@ -64,3 +114,4 @@ export function loadUser(sub) {
     }
   };
 }
+ */

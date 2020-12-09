@@ -4,13 +4,13 @@ const initialState = {};
 
 export default function authReducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.ADD_USER:
+    case actionTypes.LOGIN_USER_GOOGLE:
       return {
         ...state,
         user: action.user,
       };
 
-    case actionTypes.LOAD_USER:
+    case actionTypes.SEND_USER:
       return {
         ...state,
         user: action.user,

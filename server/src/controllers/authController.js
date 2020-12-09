@@ -1,16 +1,15 @@
 function authController (User) {
-  function getMethod (req, res) {
-    User.findOne({ sub: req.params.sub })
+  function postMethod (req, res) {
+    const query = { id: req.body.id }
+    User.findOneAndUpdate(query, req.body, { upsert: true, useFindAndModify: false })
       .populate('favs')
       .populate('restaurant')
       .populate('saved.product')
       .populate('sent')
-      .exec((errorFindUser, user) => (errorFindUser
-        ? res.send(errorFindUser)
-        : res.json(user)))
+      .exec((error, newUser) => { error ? res.send(error) : res.json(newUser) })
   }
 
-  function postMethod (req, res) {
+  /*   function postMethod (req, res) {
     const user = req.body
     User.create(user, (error, newUser) => {
       if (error) {
@@ -19,9 +18,9 @@ function authController (User) {
         res.send(newUser)
       }
     })
-  }
+  } */
 
-  return { getMethod, postMethod }
+  return { postMethod }
 }
 
 module.exports = authController

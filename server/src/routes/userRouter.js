@@ -18,7 +18,6 @@ function userRouter (User) {
     .delete(user.deleteMethod)
 
   router.route('/auth/:sub')
-    .get(auth.getMethod)
     .post(auth.postMethod)
 
   return router

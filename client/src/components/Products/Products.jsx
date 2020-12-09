@@ -31,7 +31,7 @@ function Products({
 
   useEffect(
     () => {
-      if (mongoUser.sub) {
+      if (mongoUser?.sub) {
         dispatch(loadOrderProductsList(mongoUser));
       }
     },
