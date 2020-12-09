@@ -1,9 +1,18 @@
 import axios from 'axios';
+import * as Network from 'expo-network';
 import actionTypes from './action-types';
 
-const productsURL = 'http://192.168.0.34:4500/products';
-const authURL = 'http://192.168.0.34:4500/users/auth/';
-const userURL = 'http://192.168.0.34:4500/users/';
+let lanIp = '';
+let productsURL = '';
+let authURL = '';
+let userURL = '';
+
+async function getExpoIp() {
+  lanIp = await Network.getIpAddressAsync();
+  productsURL = `http://${lanIp}:4500/products`;
+  authURL = `http://${lanIp}:4500/users/auth/`;
+  userURL = `http://${lanIp}:4500/users/`;
+}
 
 export function loadProductsSuccess(productsList) {
   return {
@@ -21,6 +30,7 @@ export function loadProductsError(error) {
 
 export function loadProductList() {
   return async (dispatch) => {
+    await getExpoIp();
     try {
       const productsList = await axios.get(productsURL);
       dispatch(loadProductsSuccess(productsList.data));
@@ -46,8 +56,9 @@ export function loadOrderProductsError(error) {
 
 export function loadOrderProductsList(mongoUser) {
   return async (dispatch) => {
+    await getExpoIp();
     try {
-      const user = await axios.get(`${authURL}${mongoUser.sub}`);
+      const user = await axios.get(`${authURL}${mongoUser.id}`);
       const orderList = user.data.saved;
 
       dispatch(loadOrderProductsSuccess(orderList));
@@ -73,11 +84,12 @@ export function addOrderProductSuccess(orderList) {
 
 export function addOrderProduct(product, mongoUser) {
   return async (dispatch) => {
+    await getExpoIp();
     try {
       // eslint-disable-next-line no-underscore-dangle
       const productId = product._id.toString();
       const newOrderProduct = await axios.patch(
-        `${userURL}${mongoUser._id.toString()}`,
+        `${userURL}${mongoUser.id}`,
         { _id: productId },
       );
       dispatch(addOrderProductSuccess(newOrderProduct.data.saved));
@@ -103,11 +115,12 @@ export function deleteOrderProductSuccess(orderList) {
 
 export function deleteOrderProduct(product, mongoUser) {
   return async (dispatch) => {
+    await getExpoIp();
     try {
       // eslint-disable-next-line no-underscore-dangle
       const productId = product._id.toString();
       const newOrderProduct = await axios.delete(
-        `${userURL}${mongoUser._id.toString()}`,
+        `${userURL}${mongoUser.id}`,
         { data: { _id: productId } },
       );
       dispatch(deleteOrderProductSuccess(newOrderProduct.data.saved));

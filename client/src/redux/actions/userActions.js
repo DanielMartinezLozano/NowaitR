@@ -1,8 +1,15 @@
 import axios from 'axios';
+import * as Network from 'expo-network';
 import signinWithGoogle from '../../../config';
 import actionTypes from './action-types';
 
-const usersURL = 'http://192.168.0.34:4500/users/auth/';
+let lanIp;
+let usersURL = '';
+
+async function getExpoIp() {
+  lanIp = await Network.getIpAddressAsync();
+  usersURL = `http://${lanIp}:4500/users/auth/`;
+}
 
 function loginGoogleSuccess(user) {
   return {
@@ -20,6 +27,7 @@ function loginGoogleError(error) {
 
 export function loginGoogle() {
   return async (dispatch) => {
+    await getExpoIp();
     try {
       const { user } = await signinWithGoogle();
       dispatch(loginGoogleSuccess(user));
@@ -45,6 +53,7 @@ function sendUserError(error) {
 
 export function sendUser(userInfo) {
   return async (dispatch) => {
+    await getExpoIp();
     try {
       const userItem = await axios.post(usersURL, userInfo);
       dispatch(sendUserSuccess(userItem));
@@ -53,65 +62,3 @@ export function sendUser(userInfo) {
     }
   };
 }
-
-/* export function addUserError(error) {
-  return {
-    error,
-    type: actionTypes.ADD_USER_ERROR,
-  };
-}
-
-export function addUserSuccess(user) {
-  return {
-    user,
-    type: actionTypes.ADD_USER,
-  };
-}
-
-export function addUser(user) {
-  return async (dispatch) => {
-    try {
-      const newUser = {
-        name: user.name,
-        password: null,
-        email: user.email,
-        favs: [],
-        admin: false,
-        restaurant: null,
-        saved: [],
-        sent: [],
-        sub: user.sub,
-      };
-      const newUserResponse = axios.post(`${usersURL}${newUser.sub}`, newUser);
-      dispatch(addUserSuccess(newUserResponse.data));
-    } catch (error) {
-      dispatch(addUserError(error));
-    }
-  };
-}
-
-export function loadUserError(error) {
-  return {
-    error,
-    type: actionTypes.LOAD_USER_ERROR,
-  };
-}
-
-export function loadUserSuccess(user) {
-  return {
-    user,
-    type: actionTypes.LOAD_USER,
-  };
-}
-
-export function loadUser(sub) {
-  return async (dispatch) => {
-    try {
-      const userResponse = await axios.get(`${usersURL}${sub}`);
-      dispatch(loadUserSuccess(userResponse.data));
-    } catch (error) {
-      dispatch(loadUserError(error));
-    }
-  };
-}
- */

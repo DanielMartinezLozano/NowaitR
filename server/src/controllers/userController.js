@@ -12,7 +12,7 @@ function userController (User) {
 
   function patchMethod (req, res) {
     const productId = req.body._id
-    const query = { _id: req.params.userId }
+    const query = { id: req.params.userId }
 
     User.findOne(query)
       .populate('saved.product')
@@ -34,7 +34,7 @@ function userController (User) {
 
   function deleteMethod (req, res) {
     const productId = req.body._id
-    const query = { _id: req.params.userId }
+    const query = { id: req.params.userId }
 
     User.findOne(query)
       .populate('saved.product')

@@ -19,17 +19,6 @@ function Login({ dispatch, navigation, mongoUser }) {
 
   useEffect(() => {
     if (mongoUser.id) {
-      dispatch(sendUser({
-        id: mongoUser.id,
-        name: mongoUser.name,
-        email: mongoUser.email,
-        password: null,
-        favs: [],
-        admin: false,
-        restaurant: null,
-        saved: [],
-        sent: [],
-      }));
       navigation.navigate('categories');
     }
   }, [mongoUser]);

@@ -17,8 +17,11 @@ function userRouter (User) {
     .patch(user.patchMethod)
     .delete(user.deleteMethod)
 
-  router.route('/auth/:sub')
+  router.route('/auth')
     .post(auth.postMethod)
+
+  router.route('/auth/:id')
+    .get(auth.getMethod)
 
   return router
 }
