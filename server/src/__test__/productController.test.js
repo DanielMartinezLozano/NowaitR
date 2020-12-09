@@ -1,6 +1,6 @@
 /* eslint-disable node/no-callback-literal */
 const Product = require('../models/productModel')
-const productController = require('../controllers/productController')
+const productController = require('../controllers/productController')(Product)
 
 describe('productController', () => {
   test('should call response json on getMethod', async () => {
@@ -14,7 +14,7 @@ describe('productController', () => {
       }
     }
 
-    Product.find = jest.fn().mockReturnValue({
+    Product.findOne = jest.fn().mockReturnValue({
       exec: jest.fn().mockImplementationOnce((callback) => {
         callback(false, {})
       })
@@ -34,7 +34,7 @@ describe('productController', () => {
       }
     }
 
-    Product.find = jest.fn().mockReturnValue({
+    Product.findOne = jest.fn().mockReturnValue({
       exec: jest.fn().mockImplementationOnce((callback) => {
         callback(true, {})
       })

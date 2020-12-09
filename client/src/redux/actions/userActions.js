@@ -1,66 +1,64 @@
 import axios from 'axios';
-// import firebase from 'firebase';
+import * as Network from 'expo-network';
+import signinWithGoogle from '../../../config';
 import actionTypes from './action-types';
 
-const usersURL = 'http://192.168.0.34:4500/users/auth/';
+let lanIp;
+let usersURL = '';
 
-export function addUserError(error) {
-  return {
-    error,
-    type: actionTypes.ADD_USER_ERROR,
-  };
+async function getExpoIp() {
+  lanIp = await Network.getIpAddressAsync();
+  usersURL = `http://${lanIp}:4500/users/auth/`;
 }
 
-export function addUserSuccess(user) {
+function loginGoogleSuccess(user) {
   return {
+    type: actionTypes.LOGIN_USER_GOOGLE,
     user,
-    type: actionTypes.ADD_USER,
   };
 }
 
-export function addUser(user) {
+function loginGoogleError(error) {
+  return {
+    type: actionTypes.LOGIN_USER_GOOGLE_ERROR,
+    error,
+  };
+}
+
+export function loginGoogle() {
   return async (dispatch) => {
+    await getExpoIp();
     try {
-      const newUser = {
-        name: user.name,
-        password: null,
-        email: user.email,
-        favs: [],
-        admin: false,
-        restaurant: null,
-        saved: [],
-        sent: [],
-        sub: user.sub,
-      };
-      const newUserResponse = axios.post(`${usersURL}${newUser.sub}`, newUser);
-      dispatch(addUserSuccess(newUserResponse.data));
+      const { user } = await signinWithGoogle();
+      dispatch(loginGoogleSuccess(user));
     } catch (error) {
-      dispatch(addUserError(error));
+      dispatch(loginGoogleError(error));
     }
   };
 }
 
-export function loadUserError(error) {
+function sendUserSuccess(user) {
   return {
-    error,
-    type: actionTypes.LOAD_USER_ERROR,
-  };
-}
-
-export function loadUserSuccess(user) {
-  return {
+    type: actionTypes.SEND_USER,
     user,
-    type: actionTypes.LOAD_USER,
   };
 }
 
-export function loadUser(sub) {
+function sendUserError(error) {
+  return {
+    type: actionTypes.SEND_USER_ERROR,
+    error,
+  };
+}
+
+export function sendUser(userInfo) {
   return async (dispatch) => {
+    await getExpoIp();
     try {
-      const userResponse = await axios.get(`${usersURL}${sub}`);
-      dispatch(loadUserSuccess(userResponse.data));
+      const userItem = await axios.post(usersURL, userInfo);
+      dispatch(sendUserSuccess(userItem));
     } catch (error) {
-      dispatch(loadUserError(error));
+      dispatch(sendUserError(error));
     }
   };
 }

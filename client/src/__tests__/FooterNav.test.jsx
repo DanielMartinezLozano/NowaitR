@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react-native';
 import React from 'react';
 import '@react-navigation/native';
-import FooterNav from '../../components/FooterNav/FooterNav';
+import FooterNav from '../components/FooterNav/FooterNav';
 
 const mockedNavigate = jest.fn();
 

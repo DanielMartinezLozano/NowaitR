@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import firebase from 'firebase';
-import firebaseConfig from './config';
+import { firebaseConfig } from './config';
 import configureStore from './src/redux/configureStore';
 import Categories from './src/components/Categories/Categories';
 import Products from './src/components/Products/Products';

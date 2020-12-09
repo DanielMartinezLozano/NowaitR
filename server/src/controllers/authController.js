@@ -1,28 +1,25 @@
 function authController (User) {
-  function getMethod (req, res) {
-    User.findOne({ sub: req.params.sub })
+  function postMethod (req, res) {
+    const query = { id: req.body.id }
+    User.findOneAndUpdate(query, req.body, { upsert: true, useFindAndModify: false })
       .populate('favs')
       .populate('restaurant')
       .populate('saved.product')
       .populate('sent')
-      .exec((errorFindUser, user) => (errorFindUser
-        ? res.send(errorFindUser)
-        : res.json(user)))
+      .exec((error, newUser) => { error ? res.send(error) : res.json(newUser) })
   }
 
-  function postMethod (req, res) {
-    const user = req.body
-    const createCallBack = (error, newUser) => {
-      if (error) {
-        res.send(error)
-      } else {
-        res.send(newUser)
-      }
-    }
-    User.create(user, createCallBack)
+  function getMethod (req, res) {
+    const query = { id: req.params.id }
+    User.findOne(query)
+      .populate('favs')
+      .populate('restaurant')
+      .populate('saved.product')
+      .populate('sent')
+      .exec((error, user) => { error ? res.send(error) : res.json(user) })
   }
 
-  return { getMethod, postMethod }
+  return { postMethod, getMethod }
 }
 
 module.exports = authController

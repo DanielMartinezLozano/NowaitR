@@ -24,7 +24,7 @@ function Order({ orderList, dispatch, mongoUser }) {
   return (
     orderList.length !== 0
     && (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1 }} testID="Order">
       <FlatList
         ListHeaderComponent={(
           <View style={styles.titleContainer}>

@@ -22,7 +22,7 @@ function Products({
 
   useEffect(
     () => {
-      if (!products || !products.length) {
+      if (!products.length) {
         dispatch(loadProductList());
       }
     },
@@ -31,7 +31,7 @@ function Products({
 
   useEffect(
     () => {
-      if (mongoUser.sub) {
+      if (mongoUser.id) {
         dispatch(loadOrderProductsList(mongoUser));
       }
     },
@@ -41,7 +41,7 @@ function Products({
   return (
     <View style={styles.body}>
       <View style={styles.container}>
-        {products?.length !== 0 && (
+        {products.length !== 0 && (
           <FlatList
             ListHeaderComponent={(
               <View style={{ width: '100%' }}>
@@ -111,7 +111,7 @@ Products.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object),
   orderList: PropTypes.arrayOf(PropTypes.object),
   orderSize: PropTypes.number.isRequired,
-  mongoUser: PropTypes.shape({ sub: PropTypes.string }),
+  mongoUser: PropTypes.shape({ id: PropTypes.string }),
 };
 
 Products.defaultProps = {

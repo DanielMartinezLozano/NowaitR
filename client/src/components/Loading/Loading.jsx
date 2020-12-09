@@ -7,13 +7,23 @@ import firebase from 'firebase';
 import { useIsFocused } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import styles from './LoadingStyles';
-import { loadUser } from '../../redux/actions/userActions';
+import { sendUser } from '../../redux/actions/userActions';
 
 function Loading({ dispatch, navigation }) {
   function checkIfLoggedIn() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        dispatch(loadUser(user.providerData[0].uid));
+        dispatch(sendUser({
+          id: user.providerData[0].uid,
+          name: user.providerData[0].displayName,
+          email: user.providerData[0].email,
+          password: null,
+          favs: [],
+          admin: false,
+          restaurant: null,
+          saved: [],
+          sent: [],
+        }));
         setTimeout(() => { navigation.navigate('categories'); }, 3000);
       } else {
         setTimeout(() => { navigation.navigate('login'); }, 3000);

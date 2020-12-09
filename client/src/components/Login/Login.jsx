@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View, Text, TouchableHighlight, Image,
 } from 'react-native';
@@ -10,83 +10,23 @@ import firebase from 'firebase';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './LoginStyles';
-import { addUser, loadUser } from '../../redux/actions/userActions';
+import { loginGoogle, sendUser } from '../../redux/actions/userActions';
 
 function Login({ dispatch, navigation, mongoUser }) {
-  function isUserEqual(googleUser, firebaseUser) {
-    if (firebaseUser) {
-      const { providerData } = firebaseUser;
-      for (let i = 0; i < providerData.length; i += 1) {
-        if (providerData[i].providerId === firebase.auth.GoogleAuthProvider.PROVIDER_ID
-                && providerData[i].uid === googleUser.getBasicProfile().getId()) {
-          // We don't need to reauth the Firebase connection.
-          return true;
-        }
-      }
+  function handleLoginClick() {
+    dispatch(loginGoogle());
+  }
+
+  useEffect(() => {
+    if (mongoUser.id) {
+      navigation.navigate('categories');
     }
-    return false;
-  }
-
-  function onSignIn(googleUser) {
-    // We need to register an Observer on Firebase Auth to make sure auth is initialized.
-    const unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
-      unsubscribe();
-      // Check if we are already signed-in Firebase with the correct user.
-      if (!isUserEqual(googleUser, firebaseUser)) {
-        // Build Firebase credential with the Google ID token.
-        const credential = firebase.auth.GoogleAuthProvider.credential(
-          googleUser.idToken,
-          googleUser.accessToken,
-        );
-
-        // Sign in with credential from the Google user.
-        firebase.auth().signInWithCredential(credential).then(
-          (result) => {
-            if (result.additionalUserInfo.isNewUser) {
-              dispatch(addUser(result.additionalUserInfo.profile));
-            } else {
-              const { sub } = result.additionalUserInfo.profile;
-              dispatch(loadUser(sub));
-            }
-          },
-        ).catch((error) => {
-          // Handle Errors here.
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // The email of the user's account used.
-          const { email } = error;
-          // The firebase.auth.AuthCredential type that was used.
-          const { credential } = error;
-          // ...
-        });
-      } else {
-        console.log('User already signed-in Firebase.');
-      }
-    });
-  }
-
-  async function signInWithGoogleAsync() {
-    try {
-      const result = await Google.logInAsync({
-        androidClientId: '911481650727-16pqsb2qhep5korq3l4v239088qqb4dk.apps.googleusercontent.com',
-        iosClientId: '911481650727-c5qtavkbcnuqge0o8lbnnb7mtndtrbh9.apps.googleusercontent.com',
-        scopes: ['profile', 'email'],
-      });
-
-      if (result.type === 'success') {
-        onSignIn(result);
-        return result.accessToken;
-      }
-      return { cancelled: true };
-    } catch (e) {
-      return { error: true };
-    }
-  }
+  }, [mongoUser]);
 
   return (
     <View style={styles.container}>
       <TouchableHighlight
-        onPress={() => signInWithGoogleAsync()}
+        onPress={() => handleLoginClick()}
         style={styles.button}
         underlayColor="rgba(82, 133, 236, 0.2)"
       >
@@ -107,7 +47,11 @@ Login.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
-  mongoUser: PropTypes.shape({}),
+  mongoUser: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    email: PropTypes.string,
+  }),
 };
 
 Login.defaultProps = {

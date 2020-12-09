@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import firebase from 'firebase';
-import HeaderLogo from '../../components/HeaderLogo/HeaderLogo';
+import HeaderLogo from '../components/HeaderLogo/HeaderLogo';
 
 jest.mock('firebase');
 
