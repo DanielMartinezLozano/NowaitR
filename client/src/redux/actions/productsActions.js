@@ -113,3 +113,59 @@ export function deleteOrderProduct(product, mongoUser) {
     }
   };
 }
+
+export function loadFavProductsSuccess(favList) {
+  return {
+    favList,
+    type: actionTypes.LOAD_FAV_PRODUCTS,
+  };
+}
+
+export function loadFavProductsError(error) {
+  return {
+    error,
+    type: actionTypes.LOAD_FAV_PRODUCTS_ERROR,
+  };
+}
+
+export function loadFavProductsList(mongoUser) {
+  return async (dispatch) => {
+    try {
+      const user = await axios.get(`${endpoints.userFavURL}${mongoUser.id}`);
+      const favList = user.data;
+      dispatch(loadFavProductsSuccess(favList));
+    } catch (error) {
+      dispatch(loadFavProductsError(error));
+    }
+  };
+}
+
+export function addFavProductError(error) {
+  return {
+    error,
+    type: actionTypes.ADD_TO_FAVS_ERROR,
+  };
+}
+
+export function addFavProductSuccess(favList) {
+  return {
+    type: actionTypes.ADD_TO_FAVS,
+    favList,
+  };
+}
+
+export function addFavProduct(product, user) {
+  return async (dispatch) => {
+    try {
+      // eslint-disable-next-line no-underscore-dangle
+      const productId = product._id.toString();
+      const newFavProduct = await axios.patch(
+        `${endpoints.userFavURL}${user.id}`,
+        { _id: productId },
+      );
+      dispatch(addFavProductSuccess(newFavProduct.data.favs));
+    } catch (error) {
+      dispatch(addFavProductError(error));
+    }
+  };
+}

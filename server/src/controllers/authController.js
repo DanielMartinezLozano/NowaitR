@@ -1,7 +1,7 @@
 function authController (User) {
   function postMethod (req, res) {
     const query = { id: req.body.id }
-    User.findOneAndUpdate(query, req.body, { upsert: true, new: true })
+    User.findOneAndUpdate(query, req.body, { upsert: true, new: true, useFindAndModify: false })
       .populate('favs')
       .populate('restaurant')
       .populate('saved.product')

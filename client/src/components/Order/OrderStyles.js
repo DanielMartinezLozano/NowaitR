@@ -93,7 +93,7 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 40,
+    padding: 25,
     backgroundColor: stylesType.brown,
     shadowColor: '#000',
     shadowOffset: {
@@ -124,6 +124,12 @@ const styles = {
     fontWeight: '600',
     color: '#202020',
     marginRight: 10,
+  },
+  noOrder: {
+    margin: 40,
+    fontSize: 16,
+    color: stylesType.black,
+    textAlign: 'center',
   },
   totalAmount: {
     fontSize: 20,
