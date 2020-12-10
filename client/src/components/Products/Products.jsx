@@ -10,7 +10,7 @@ import { useNavigation, CommonActions } from '@react-navigation/native';
 import styles from './ProductsStyles';
 import {
   loadProductList, loadOrderProductsList, addOrderProduct,
-  deleteOrderProduct, addFavProduct, loadFavProductsList,
+  deleteOrderProduct, addFavProduct, loadFavProductsList, removeFavProduct,
 } from '../../redux/actions/productsActions';
 import FooterNav from '../FooterNav/FooterNav';
 import { productQuantity, isInFavs } from './productFunctions';
@@ -82,7 +82,7 @@ function Products({
                     ? (
                       <Pressable
                         style={styles.heartIconPresseable}
-                        // onPress={() => dispatch(addFavProduct(item, user))}
+                        onPress={() => dispatch(removeFavProduct(item, user))}
                       >
                         <Image
                           source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4e2ccad234f1c1cdcdb7a/1c43ae6daee6fb15ce91fd7e5913d3fe/icons8-heart-144.png' }}
@@ -96,7 +96,7 @@ function Products({
                         onPress={() => dispatch(addFavProduct(item, user))}
                       >
                         <Image
-                          source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4e2ccad234f1c1cdcdb7a/f3fade3a4856b87babc0af328f17c840/icons8-heart-192.png' }}
+                          source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4e2ccad234f1c1cdcdb7a/9a22821aaa623d2a36788d68a6c6e6f0/icons8-heart-144_c%C3%B2pia.png' }}
                           style={styles.heartIcon}
                         />
                       </Pressable>

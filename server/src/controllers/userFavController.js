@@ -28,24 +28,19 @@ function userFavController (User) {
           }
         })
   }
-
   function deleteMethod (req, res) {
+    const query = req.params.userId
     const productId = req.body._id
-    const query = { id: req.params.userId }
+    const update = { $pull: { favs: productId } }
 
-    User.findOne(query)
-      .populate('saved.product')
+    User.findByIdAndUpdate(query, update, { new: true })
+      .populate('favs')
       .exec((error, success) => {
         if (error) {
           return res.send(error)
+        } else {
+          return res.json(success)
         }
-        const productFound = success.favs.find((productFound) => productFound._id.toString() === productId)
-        if (productFound) {
-          const index = success.favs.indexOf(productFound)
-          success.saved.splice(index, 1)
-        }
-        success.save()
-        res.send(success)
       })
   }
 

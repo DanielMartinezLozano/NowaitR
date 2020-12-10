@@ -169,3 +169,33 @@ export function addFavProduct(product, user) {
     }
   };
 }
+
+export function removeFavProductError(error) {
+  return {
+    error,
+    type: actionTypes.REMOVE_FROM_FAVS_ERROR,
+  };
+}
+
+export function removeFavProductSuccess(favList) {
+  return {
+    type: actionTypes.REMOVE_FROM_FAVS,
+    favList,
+  };
+}
+
+export function removeFavProduct(product, user) {
+  return async (dispatch) => {
+    try {
+      // eslint-disable-next-line no-underscore-dangle
+      const productId = product._id.toString();
+      const updatedFavList = await axios.delete(
+        `${endpoints.userFavURL}${user._id.toString()}`,
+        { data: { _id: productId } },
+      );
+      dispatch(removeFavProductSuccess(updatedFavList.data.favs));
+    } catch (error) {
+      dispatch(removeFavProductError(error));
+    }
+  };
+}

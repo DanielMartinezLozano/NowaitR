@@ -85,6 +85,11 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     height: 100,
   },
+  heartIconPresseable: {
+    position: 'absolute',
+    top: 0,
+    left: -10,
+  },
   heartIcon: {
     position: 'absolute',
     width: 30,
