@@ -13,7 +13,7 @@ function Categories({ orderSize, navigation }) {
     <View testID="categoriesContainer" style={styles.container}>
       <ScrollView style={styles.body}>
         <ImageBackground
-          source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4dc9993cb2246bcf252bc/187a250197be6825c7e7867bc246bd26/restaurant-photo.jpg' }}
+          source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4dc9993cb2246bcf252bc/913f93bf2303e08aed111d15f31067d7/Restaurant_N%C3%A4sinneula.jpg' }}
           style={styles.image}
         >
           <Text style={styles.title}>Restaurante Skylab</Text>

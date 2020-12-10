@@ -1,41 +1,10 @@
 /* eslint-disable react/destructuring-assignment */
 import { View } from 'native-base';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Image, StatusBar } from 'react-native';
-import PropTypes from 'prop-types';
-import firebase from 'firebase';
-import { useIsFocused } from '@react-navigation/native';
-import { connect } from 'react-redux';
 import styles from './LoadingStyles';
-import { sendUser } from '../../redux/actions/userActions';
 
-function Loading({ dispatch, navigation }) {
-  function checkIfLoggedIn() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        dispatch(sendUser({
-          id: user.providerData[0].uid,
-          name: user.providerData[0].displayName,
-          email: user.providerData[0].email,
-          password: null,
-          favs: [],
-          admin: false,
-          restaurant: null,
-          saved: [],
-          sent: [],
-        }));
-        setTimeout(() => { navigation.navigate('categories'); }, 3000);
-      } else {
-        setTimeout(() => { navigation.navigate('login'); }, 3000);
-      }
-    });
-  }
-
-  const isFocused = useIsFocused();
-  useEffect(() => {
-    checkIfLoggedIn();
-  }, [isFocused]);
-
+function Loading() {
   return (
     <View testID="Loading" style={styles.container}>
       <StatusBar barStyle="dark-content" />
@@ -47,22 +16,4 @@ function Loading({ dispatch, navigation }) {
   );
 }
 
-Loading.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-  mongoUser: PropTypes.shape({}),
-};
-
-Loading.defaultProps = {
-  mongoUser: {},
-};
-
-function mapStateToProps({ authReducer }) {
-  return {
-    mongoUser: authReducer.user,
-  };
-}
-
-export default connect(mapStateToProps)(Loading);
+export default Loading;

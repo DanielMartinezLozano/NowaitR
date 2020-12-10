@@ -1,18 +1,6 @@
 import axios from 'axios';
-import * as Network from 'expo-network';
 import actionTypes from './action-types';
-
-let lanIp = '';
-let productsURL = '';
-let authURL = '';
-let userURL = '';
-
-async function getExpoIp() {
-  lanIp = await Network.getIpAddressAsync();
-  productsURL = `http://${lanIp}:4500/products`;
-  authURL = `http://${lanIp}:4500/users/auth/`;
-  userURL = `http://${lanIp}:4500/users/`;
-}
+import endpoints from './endpoints';
 
 export function loadProductsSuccess(productsList) {
   return {
@@ -30,9 +18,8 @@ export function loadProductsError(error) {
 
 export function loadProductList() {
   return async (dispatch) => {
-    await getExpoIp();
     try {
-      const productsList = await axios.get(productsURL);
+      const productsList = await axios.get(endpoints.productsURL);
       dispatch(loadProductsSuccess(productsList.data));
     } catch (error) {
       dispatch(loadProductsError(error));
@@ -56,9 +43,8 @@ export function loadOrderProductsError(error) {
 
 export function loadOrderProductsList(mongoUser) {
   return async (dispatch) => {
-    await getExpoIp();
     try {
-      const user = await axios.get(`${authURL}${mongoUser.id}`);
+      const user = await axios.get(`${endpoints.authURL}${mongoUser.id}`);
       const orderList = user.data.saved;
 
       dispatch(loadOrderProductsSuccess(orderList));
@@ -82,14 +68,13 @@ export function addOrderProductSuccess(orderList) {
   };
 }
 
-export function addOrderProduct(product, mongoUser) {
+export function addOrderProduct(product, user) {
   return async (dispatch) => {
-    await getExpoIp();
     try {
       // eslint-disable-next-line no-underscore-dangle
       const productId = product._id.toString();
       const newOrderProduct = await axios.patch(
-        `${userURL}${mongoUser.id}`,
+        `${endpoints.userURL}${user.id}`,
         { _id: productId },
       );
       dispatch(addOrderProductSuccess(newOrderProduct.data.saved));
@@ -115,12 +100,11 @@ export function deleteOrderProductSuccess(orderList) {
 
 export function deleteOrderProduct(product, mongoUser) {
   return async (dispatch) => {
-    await getExpoIp();
     try {
       // eslint-disable-next-line no-underscore-dangle
       const productId = product._id.toString();
       const newOrderProduct = await axios.delete(
-        `${userURL}${mongoUser.id}`,
+        `${endpoints.userURL}${mongoUser.id}`,
         { data: { _id: productId } },
       );
       dispatch(deleteOrderProductSuccess(newOrderProduct.data.saved));

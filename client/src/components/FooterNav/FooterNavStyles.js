@@ -5,7 +5,6 @@ const styles = {
     backgroundColor: stylesType.gray,
     display: 'flex',
     flexDirection: 'row',
-    position: 'fixed',
     height: 70,
     shadowColor: '#000',
     shadowOffset: {
