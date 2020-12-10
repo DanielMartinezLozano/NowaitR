@@ -1,7 +1,7 @@
 /* eslint-disable react/no-this-in-sfc */
 import React, { useEffect } from 'react';
 import {
-  View, Text, FlatList, Image, TouchableOpacity,
+  View, Text, FlatList, Image, TouchableOpacity, Pressable,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -10,7 +10,7 @@ import { useNavigation, CommonActions } from '@react-navigation/native';
 import styles from './FavoritesStyles';
 import {
   loadOrderProductsList, addOrderProduct,
-  deleteOrderProduct, loadFavProductsList,
+  deleteOrderProduct, loadFavProductsList, removeFavProduct,
 } from '../../redux/actions/productsActions';
 import FooterNav from '../FooterNav/FooterNav';
 import { productQuantity } from '../Products/productFunctions';
@@ -71,10 +71,15 @@ function Favorites({
                   source={{ uri: item.img }}
                   style={styles.image}
                 />
-                <Image
-                  source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4e2ccad234f1c1cdcdb7a/1c43ae6daee6fb15ce91fd7e5913d3fe/icons8-heart-144.png' }}
-                  style={styles.heartIcon}
-                />
+                <Pressable
+                  style={styles.heartIconPresseable}
+                  onPress={() => dispatch(removeFavProduct(item, user))}
+                >
+                  <Image
+                    source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4e2ccad234f1c1cdcdb7a/1c43ae6daee6fb15ce91fd7e5913d3fe/icons8-heart-144.png' }}
+                    style={styles.heartIcon}
+                  />
+                </Pressable>
               </View>
               <Text style={styles.productTitle}>{item.name}</Text>
               <Text style={styles.price}>{`${item.price?.toFixed(2)} €`}</Text>

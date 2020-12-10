@@ -11,17 +11,16 @@ export default function favReducer(state = initialState, action) {
       };
 
     case actionTypes.ADD_TO_FAVS:
-      // console.log(action.favList);
       return {
         ...state,
         favList: [...action.favList],
       };
 
-      /*     case actionTypes.DELETE_FROM_ORDER:
+    case actionTypes.REMOVE_FROM_FAVS:
       return {
         ...state,
         favList: [...action.favList],
-      }; */
+      };
 
     default:
       return state;
