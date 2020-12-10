@@ -1,12 +1,17 @@
 import { Image, TouchableOpacity } from 'react-native';
 import { Header } from 'react-native-elements';
 import React from 'react';
-import firebase from 'firebase';
+import { connect } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import PropTypes from 'prop-types';
 import styles from './HeaderLogoStyles';
+import { logOutUser } from '../../redux/actions/userActions';
 
-function HeaderLogo() {
+function HeaderLogo({ dispatch }) {
+  const navigation = useNavigation();
+
   const renderLogOut = () => (
-    <TouchableOpacity testID="signOutButton" onPress={() => firebase.auth().signOut()}>
+    <TouchableOpacity testID="signOutButton" onPress={() => { dispatch(logOutUser()); return navigation.navigate('login'); }}>
       <Image
         style={styles.logout}
         source={{ uri: 'https://cdn2.iconfinder.com/data/icons/picons-essentials/57/logout-512.png' }}
@@ -34,4 +39,14 @@ function HeaderLogo() {
   );
 }
 
-export default HeaderLogo;
+HeaderLogo.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
+
+function mapStateToProps({ authReducer }) {
+  return {
+    user: authReducer.user,
+  };
+}
+
+export default connect(mapStateToProps)(HeaderLogo);

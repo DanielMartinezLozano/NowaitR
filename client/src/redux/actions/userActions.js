@@ -1,20 +1,12 @@
 import axios from 'axios';
-import * as Network from 'expo-network';
 import signinWithGoogle from '../../../config';
 import actionTypes from './action-types';
+import endpoints from './endpoints';
 
-let lanIp;
-let usersURL = '';
-
-async function getExpoIp() {
-  lanIp = await Network.getIpAddressAsync();
-  usersURL = `http://${lanIp}:4500/users/auth/`;
-}
-
-function loginGoogleSuccess(user) {
+function loginGoogleSuccess(firebaseUser) {
   return {
     type: actionTypes.LOGIN_USER_GOOGLE,
-    user,
+    firebaseUser,
   };
 }
 
@@ -27,7 +19,6 @@ function loginGoogleError(error) {
 
 export function loginGoogle() {
   return async (dispatch) => {
-    await getExpoIp();
     try {
       const { user } = await signinWithGoogle();
       dispatch(loginGoogleSuccess(user));
@@ -53,12 +44,25 @@ function sendUserError(error) {
 
 export function sendUser(userInfo) {
   return async (dispatch) => {
-    await getExpoIp();
     try {
-      const userItem = await axios.post(usersURL, userInfo);
-      dispatch(sendUserSuccess(userItem));
+      const userItem = await axios.post(endpoints.usersURL, userInfo);
+      dispatch(sendUserSuccess(userItem.data));
     } catch (error) {
       dispatch(sendUserError(error));
     }
+  };
+}
+
+function logOutUserSuccess(firebaseUser) {
+  return {
+    type: actionTypes.LOGOUT_USER,
+    firebaseUser,
+  };
+}
+
+export function logOutUser() {
+  return async (dispatch) => {
+    const user = {};
+    dispatch(logOutUserSuccess(user));
   };
 }

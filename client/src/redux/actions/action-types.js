@@ -11,6 +11,7 @@ const actionTypes = {
   LOGIN_USER_GOOGLE_ERROR: 'LOGIN_USER_GOOGLE_ERROR',
   SEND_USER: 'SEND_USER',
   SEND_USER_ERROR: 'SEND_USER_ERROR',
+  LOGOUT_USER: 'LOGOUT_USER',
 };
 
 export default actionTypes;

@@ -16,10 +16,9 @@ import FooterNav from '../FooterNav/FooterNav';
 import productQuantity from './productQuantity';
 
 function Products({
-  products, orderList, orderSize, dispatch, mongoUser,
+  products, orderList, orderSize, dispatch, user,
 }) {
   const navigation = useNavigation();
-
   useEffect(
     () => {
       if (!products.length) {
@@ -31,13 +30,12 @@ function Products({
 
   useEffect(
     () => {
-      if (mongoUser.id) {
-        dispatch(loadOrderProductsList(mongoUser));
+      if (user?.id) {
+        dispatch(loadOrderProductsList(user));
       }
     },
-    [mongoUser, orderList?.length],
+    [user, orderList?.length],
   );
-
   return (
     <View style={styles.body}>
       <View style={styles.container}>
@@ -70,13 +68,17 @@ function Products({
                     source={{ uri: item.img }}
                     style={styles.image}
                   />
+                  <Image
+                    source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4e2ccad234f1c1cdcdb7a/f3fade3a4856b87babc0af328f17c840/icons8-heart-192.png' }}
+                    style={styles.heartIcon}
+                  />
                 </View>
                 <Text style={styles.productTitle}>{item.name}</Text>
                 <Text style={styles.price}>{`${item.price.toFixed(2)} €`}</Text>
                 <View style={styles.buttons}>
                   <TouchableOpacity
                     style={styles.button}
-                    onPress={() => dispatch(deleteOrderProduct(item, mongoUser))}
+                    onPress={() => dispatch(deleteOrderProduct(item, user))}
                   >
                     <Icon
                       color="#FFF"
@@ -87,7 +89,7 @@ function Products({
                   <Text style={styles.quantity}>{productQuantity(item, orderList)}</Text>
                   <TouchableOpacity
                     style={styles.button}
-                    onPress={() => dispatch(addOrderProduct(item, mongoUser))}
+                    onPress={() => dispatch(addOrderProduct(item, user))}
                   >
                     <Icon
                       color="#FFF"
@@ -111,13 +113,13 @@ Products.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object),
   orderList: PropTypes.arrayOf(PropTypes.object),
   orderSize: PropTypes.number.isRequired,
-  mongoUser: PropTypes.shape({ id: PropTypes.string }),
+  user: PropTypes.shape({ id: PropTypes.string }),
 };
 
 Products.defaultProps = {
   products: [],
   orderList: [],
-  mongoUser: {},
+  user: {},
 };
 
 function mapStateToProps({ productsReducer, orderReducer, authReducer }) {
@@ -125,7 +127,7 @@ function mapStateToProps({ productsReducer, orderReducer, authReducer }) {
     products: productsReducer.productsList,
     orderList: orderReducer.orderList,
     orderSize: orderReducer.orderSize,
-    mongoUser: authReducer.user,
+    user: authReducer.user,
   };
 }
 

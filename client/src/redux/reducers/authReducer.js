@@ -7,13 +7,19 @@ export default function authReducer(state = initialState, action) {
     case actionTypes.LOGIN_USER_GOOGLE:
       return {
         ...state,
-        user: action.user,
+        firebaseUser: action.firebaseUser,
       };
 
     case actionTypes.SEND_USER:
       return {
         ...state,
         user: action.user,
+      };
+
+    case actionTypes.LOGOUT_USER:
+      return {
+        ...state,
+        firebaseUser: action.firebaseUser,
       };
 
     default:

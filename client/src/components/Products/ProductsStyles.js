@@ -79,6 +79,14 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     height: 100,
   },
+  heartIcon: {
+    position: 'absolute',
+    width: 30,
+    height: 30,
+    top: 0,
+    left: -10,
+    opacity: 0.9,
+  },
   buttons: {
     display: 'flex',
     flexDirection: 'row',

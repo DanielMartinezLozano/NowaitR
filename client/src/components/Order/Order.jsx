@@ -22,8 +22,6 @@ function Order({ orderList, dispatch, mongoUser }) {
   [orderList, mongoUser]);
 
   return (
-    orderList.length !== 0
-    && (
     <View style={{ flex: 1 }} testID="Order">
       <FlatList
         ListHeaderComponent={(
@@ -88,7 +86,6 @@ function Order({ orderList, dispatch, mongoUser }) {
         />
       </TouchableOpacity>
     </View>
-    )
   );
 }
 

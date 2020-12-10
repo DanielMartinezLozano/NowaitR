@@ -12,10 +12,13 @@ function FooterNav({ orderSize }) {
 
   return (
     <View style={styles.container} testID="FooterNav">
-      <View style={styles.productsContainer}>
+      <TouchableOpacity
+        style={styles.productsContainer}
+        onPress={() => navigation.navigate('order')}
+      >
         <Text style={styles.products}>{orderSize}</Text>
         <Text style={styles.products}>Productos</Text>
-      </View>
+      </TouchableOpacity>
       <TouchableOpacity
         style={styles.waiterContainer}
         onPress={() => navigation.navigate('order')}
