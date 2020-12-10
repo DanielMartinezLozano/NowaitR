@@ -59,6 +59,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingLeft: 20,
   },
+  noFavorites: {
+    margin: 40,
+    fontSize: 16,
+    color: stylesType.black,
+    textAlign: 'center',
+  },
   productTitle: {
     color: stylesType.black,
     fontSize: 16,
@@ -79,14 +85,12 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     height: 100,
   },
-  heartIconPresseable: {
-    position: 'absolute',
-    top: 0,
-    left: -10,
-  },
   heartIcon: {
+    position: 'absolute',
     width: 30,
     height: 30,
+    top: 0,
+    left: -10,
     opacity: 0.9,
   },
   buttons: {

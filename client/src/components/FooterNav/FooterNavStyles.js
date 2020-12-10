@@ -41,12 +41,13 @@ const styles = {
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
     elevation: 5,
   },
   favContainer: {
     paddingTop: 10,
     flex: 1,
+  },
+  favTouchable: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -54,6 +55,24 @@ const styles = {
   icon: {
     height: 50,
     width: 50,
+  },
+  badgeStyle: {
+    backgroundColor: stylesType.blue,
+    borderColor: 'transparent',
+    height: 35,
+    width: 35,
+    borderRadius: 17,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
+    elevation: 2,
+  },
+  badgeTextStyle: {
+    color: stylesType.black,
   },
 };
 

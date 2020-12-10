@@ -2,23 +2,26 @@ import {
   Image, Text, View, TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import PropTypes from 'prop-types';
+import { Badge } from 'react-native-elements';
 import styles from './FooterNavStyles';
 
 function FooterNav({ orderSize }) {
   const navigation = useNavigation();
-
   return (
     <View style={styles.container} testID="FooterNav">
-      <TouchableOpacity
-        style={styles.productsContainer}
-        onPress={() => navigation.navigate('order')}
-      >
-        <Text style={styles.products}>{orderSize}</Text>
-        <Text style={styles.products}>Productos</Text>
-      </TouchableOpacity>
+      <View style={styles.favContainer}>
+        <TouchableOpacity
+          style={styles.favTouchable}
+          onPress={() => navigation.navigate('categories')}
+          testID="menuButton"
+        >
+          <Icon name="restaurant" size={24} />
+          <Text>Menu</Text>
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity
         style={styles.waiterContainer}
         onPress={() => navigation.navigate('order')}
@@ -31,10 +34,28 @@ function FooterNav({ orderSize }) {
           }}
           style={styles.icon}
         />
+        {orderSize !== 0
+        && (
+        <Badge
+          value={orderSize}
+          badgeStyle={styles.badgeStyle}
+          size={50}
+          textStyle={{ color: 'black' }}
+          containerStyle={{
+            position: 'absolute', top: 0, right: 0,
+          }}
+        />
+        )}
       </TouchableOpacity>
       <View style={styles.favContainer}>
-        <Icon name="heart" size={24} />
-        <Text>Favoritos</Text>
+        <TouchableOpacity
+          style={styles.favTouchable}
+          onPress={() => navigation.navigate('favorites')}
+          testID="favoritesButton"
+        >
+          <Icon name="favorite-border" size={24} />
+          <Text>Favoritos</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

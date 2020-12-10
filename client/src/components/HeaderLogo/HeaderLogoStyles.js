@@ -1,10 +1,12 @@
 import { StyleSheet } from 'react-native';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 import stylesType from '../../../styles/stylesType';
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: stylesType.yellow,
     elevation: 2,
+    paddingTop: getStatusBarHeight(true),
     height: 80,
     shadowColor: '#000',
     shadowOffset: {

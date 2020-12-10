@@ -15,8 +15,8 @@ function Order({ orderList, dispatch, mongoUser }) {
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (!orderList?.length && mongoUser?.sub) {
-      dispatch(loadOrderProductsList(mongoUser.sub));
+    if (!orderList?.length && mongoUser?.id) {
+      dispatch(loadOrderProductsList(mongoUser.id));
     }
   },
   [orderList, mongoUser]);
@@ -35,6 +35,8 @@ function Order({ orderList, dispatch, mongoUser }) {
               />
             </TouchableOpacity>
             <Text style={styles.title}>Mi Pedido</Text>
+            {!orderList.length
+                && <Text style={styles.noOrder}>¡Añade productos para hacer el pedido!</Text>}
           </View>
     )}
         data={orderList}
@@ -92,7 +94,7 @@ function Order({ orderList, dispatch, mongoUser }) {
 Order.propTypes = {
   dispatch: PropTypes.func.isRequired,
   orderList: PropTypes.arrayOf(PropTypes.object),
-  mongoUser: PropTypes.shape({ sub: PropTypes.string }),
+  mongoUser: PropTypes.shape({ id: PropTypes.string }),
 };
 
 Order.defaultProps = {

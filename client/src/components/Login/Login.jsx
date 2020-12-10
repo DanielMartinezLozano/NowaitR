@@ -3,7 +3,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import {
-  View, Text, TouchableHighlight, Image, ImageBackground,
+  View, Text, TouchableHighlight, Image, ImageBackground, StatusBar,
 } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -26,12 +26,6 @@ function Login({
         id: firebaseUser.id,
         name: firebaseUser.name,
         email: firebaseUser.email,
-        password: null,
-        favs: [],
-        admin: false,
-        restaurant: null,
-        saved: [],
-        sent: [],
       }));
       navigation.navigate('categories');
     }
@@ -44,6 +38,7 @@ function Login({
       onLoadStart={() => setState({ loading: true })}
       onLoadEnd={() => { setState({ loading: false }); }}
     >
+      <StatusBar barStyle="light-content" />
       <Text style={styles.title}>¡Hola de nuevo!</Text>
       <Text style={styles.subtitle}>Inicia sesión para empezar tu pedido</Text>
       <TouchableHighlight

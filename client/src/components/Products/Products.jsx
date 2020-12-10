@@ -1,7 +1,7 @@
 /* eslint-disable react/no-this-in-sfc */
 import React, { useEffect } from 'react';
 import {
-  View, Text, FlatList, Image, TouchableOpacity,
+  View, Text, FlatList, Image, TouchableOpacity, Pressable,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -10,13 +10,13 @@ import { useNavigation, CommonActions } from '@react-navigation/native';
 import styles from './ProductsStyles';
 import {
   loadProductList, loadOrderProductsList, addOrderProduct,
-  deleteOrderProduct,
+  deleteOrderProduct, addFavProduct, loadFavProductsList,
 } from '../../redux/actions/productsActions';
 import FooterNav from '../FooterNav/FooterNav';
-import productQuantity from './productQuantity';
+import { productQuantity, isInFavs } from './productFunctions';
 
 function Products({
-  products, orderList, orderSize, dispatch, user,
+  products, orderList, orderSize, dispatch, user, favList,
 }) {
   const navigation = useNavigation();
   useEffect(
@@ -36,7 +36,16 @@ function Products({
     },
     [user, orderList?.length],
   );
-  console.log(user);
+
+  useEffect(
+    () => {
+      if (!favList?.length && user?.id) {
+        dispatch(loadFavProductsList(user));
+      }
+    },
+    [favList.length],
+  );
+
   return (
     <View style={styles.body}>
       <View style={styles.container}>
@@ -69,10 +78,29 @@ function Products({
                     source={{ uri: item.img }}
                     style={styles.image}
                   />
-                  <Image
-                    source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4e2ccad234f1c1cdcdb7a/f3fade3a4856b87babc0af328f17c840/icons8-heart-192.png' }}
-                    style={styles.heartIcon}
-                  />
+                  {isInFavs(item, favList)
+                    ? (
+                      <Pressable
+                        style={styles.heartIconPresseable}
+                        // onPress={() => dispatch(addFavProduct(item, user))}
+                      >
+                        <Image
+                          source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4e2ccad234f1c1cdcdb7a/1c43ae6daee6fb15ce91fd7e5913d3fe/icons8-heart-144.png' }}
+                          style={styles.heartIcon}
+                        />
+                      </Pressable>
+                    )
+                    : (
+                      <Pressable
+                        style={styles.heartIconPresseable}
+                        onPress={() => dispatch(addFavProduct(item, user))}
+                      >
+                        <Image
+                          source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4e2ccad234f1c1cdcdb7a/f3fade3a4856b87babc0af328f17c840/icons8-heart-192.png' }}
+                          style={styles.heartIcon}
+                        />
+                      </Pressable>
+                    )}
                 </View>
                 <Text style={styles.productTitle}>{item.name}</Text>
                 <Text style={styles.price}>{`${item.price.toFixed(2)} €`}</Text>
@@ -113,22 +141,27 @@ Products.propTypes = {
   dispatch: PropTypes.func.isRequired,
   products: PropTypes.arrayOf(PropTypes.object),
   orderList: PropTypes.arrayOf(PropTypes.object),
+  favList: PropTypes.arrayOf(PropTypes.object),
   orderSize: PropTypes.number.isRequired,
-  user: PropTypes.shape({ id: PropTypes.string }),
+  user: PropTypes.shape({ id: PropTypes.string, favs: PropTypes.arrayOf(PropTypes.object) }),
 };
 
 Products.defaultProps = {
   products: [],
+  favList: [],
   orderList: [],
   user: {},
 };
 
-function mapStateToProps({ productsReducer, orderReducer, authReducer }) {
+function mapStateToProps({
+  productsReducer, orderReducer, authReducer, favsReducer,
+}) {
   return {
     products: productsReducer.productsList,
     orderList: orderReducer.orderList,
     orderSize: orderReducer.orderSize,
     user: authReducer.user,
+    favList: favsReducer.favList,
   };
 }
 

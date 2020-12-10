@@ -2,10 +2,12 @@ const express = require('express')
 const userController = require('../controllers/userController')
 const usersController = require('../controllers/usersController')
 const authController = require('../controllers/authController')
+const userFavController = require('../controllers/userFavController')
 
 function userRouter (User) {
   const router = express.Router()
   const user = userController(User)
+  const userFav = userFavController(User)
   const users = usersController(User)
   const auth = authController(User)
 
@@ -16,6 +18,11 @@ function userRouter (User) {
     .get(user.getMethod)
     .patch(user.patchMethod)
     .delete(user.deleteMethod)
+
+  router.route('/favs/:userId')
+    .get(userFav.getMethod)
+    .patch(userFav.patchMethod)
+    .delete(userFav.deleteMethod)
 
   router.route('/auth')
     .post(auth.postMethod)

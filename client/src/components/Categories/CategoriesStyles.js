@@ -1,16 +1,19 @@
 import { StyleSheet } from 'react-native';
+import stylesType from '../../../styles/stylesType';
 
 const styles = StyleSheet.create({
   container: {
     height: '100%',
   },
-  body: {
-  },
   image: {
+    height: 150,
+  },
+  imageBackground: {
     display: 'flex',
     justifyContent: 'flex-end',
     width: '100%',
-    height: 150,
+    height: '100%',
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   title: {
     fontSize: 26,
@@ -21,10 +24,16 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
     padding: 20,
   },
+  subtitle: {
+    fontSize: 18,
+    color: stylesType.black,
+    margin: 15,
+    fontWeight: '600',
+  },
   categories: {
     display: 'flex',
     flexDirection: 'column',
-    marginTop: 20,
+    marginTop: 5,
   },
   row: {
     display: 'flex',
@@ -33,10 +42,9 @@ const styles = StyleSheet.create({
   },
   category: {
     flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
     resizeMode: 'cover',
+    textAlignVertical: 'center',
+    textAlign: 'center',
     margin: 5,
     height: 160,
     shadowColor: '#000',
@@ -48,14 +56,24 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
     borderRadius: 5,
   },
+  touchable: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+  },
   categoryName: {
     display: 'flex',
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: '700',
     color: 'white',
     textShadowColor: 'rgba(0, 0, 0, 0.8)',
     textShadowOffset: { width: -1, height: 0.6 },
     textShadowRadius: 3,
+  },
+  categoryBackground: {
+    backgroundColor: 'rgba(0,0,0,0.3)',
   },
 });
 
