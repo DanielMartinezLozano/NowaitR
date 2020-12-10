@@ -36,6 +36,7 @@ function Products({
     },
     [user, orderList?.length],
   );
+  console.log(user);
   return (
     <View style={styles.body}>
       <View style={styles.container}>
