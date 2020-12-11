@@ -142,6 +142,7 @@ Products.propTypes = {
   favList: PropTypes.arrayOf(PropTypes.object),
   orderSize: PropTypes.number.isRequired,
   user: PropTypes.shape({ id: PropTypes.string, favs: PropTypes.arrayOf(PropTypes.object) }),
+  route: PropTypes.shape({ params: PropTypes.shape({ category: PropTypes.string }) }).isRequired,
 };
 
 Products.defaultProps = {
