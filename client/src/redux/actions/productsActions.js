@@ -16,10 +16,10 @@ export function loadProductsError(error) {
   };
 }
 
-export function loadProductList() {
+export function loadProductList(category) {
   return async (dispatch) => {
     try {
-      const productsList = await axios.get(endpoints.productsURL);
+      const productsList = await axios.get(`${endpoints.productsURL}${category}`);
       dispatch(loadProductsSuccess(productsList.data));
     } catch (error) {
       dispatch(loadProductsError(error));

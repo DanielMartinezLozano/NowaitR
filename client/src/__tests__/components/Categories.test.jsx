@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import Categories from '../components/Categories/Categories';
+import Categories from '../../components/Categories/Categories';
 
 jest.mock('@react-navigation/native');
 const buildStore = configureStore([thunk]);

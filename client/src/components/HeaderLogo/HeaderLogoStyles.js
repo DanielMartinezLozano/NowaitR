@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     backgroundColor: stylesType.yellow,
     elevation: 2,
     paddingTop: getStatusBarHeight(true),
+    paddingBottom: 0,
     height: 80,
     shadowColor: '#000',
     shadowOffset: {
@@ -17,8 +18,10 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
   },
   logo: {
-    height: 35,
+    height: 28,
     width: 180,
+    margin: 0,
+    marginTop: 5,
   },
   logout: {
     height: 30,
