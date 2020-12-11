@@ -7,13 +7,16 @@ describe('productsController', () => {
     const res = {
       json: jest.fn()
     }
+    const req = {
+      params: { category: null }
+    }
 
     Product.find = jest.fn().mockReturnValue({
       exec: jest.fn().mockImplementationOnce((callback) => {
         callback(false, {})
       })
     })
-    productsController.getMethod(null, res)
+    productsController.getMethod(req, res)
     expect(res.json).toHaveBeenCalled()
   })
 
@@ -21,13 +24,16 @@ describe('productsController', () => {
     const res = {
       send: jest.fn()
     }
+    const req = {
+      params: { category: null }
+    }
 
     Product.find = jest.fn().mockReturnValue({
       exec: jest.fn().mockImplementationOnce((callback) => {
         callback(true, {})
       })
     })
-    productsController.getMethod(null, res)
+    productsController.getMethod(req, res)
     expect(res.send).toHaveBeenCalled()
   })
 })

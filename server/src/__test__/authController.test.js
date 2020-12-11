@@ -71,25 +71,47 @@ describe('authController postMethod', () => {
       body: {}
     }
 
-    User.create = jest.fn().mockImplementationOnce((user, callback) => { callback(false, {}) })
+    User.findOneAndUpdate = jest.fn().mockReturnValue({
+      populate: jest.fn().mockReturnValue({
+        populate: jest.fn().mockReturnValue({
+          populate: jest.fn().mockReturnValue({
+            populate: jest.fn().mockReturnValue({
+              exec: jest.fn().mockImplementationOnce((callback) => {
+                callback(true, {})
+              })
+            })
+          })
+        })
+      })
+    })
+
     authController.postMethod(req, res)
     expect(res.send).toHaveBeenCalled()
   })
 
   test('should call response send on postMethod', async () => {
     const res = {
-      send: jest.fn()
+      json: jest.fn()
     }
     const req = {
-      params: {
-        sub: null
-      }
+      body: {}
     }
 
-    User.create = jest.fn().mockImplementationOnce((user, callback) => { callback(true, {}) })
+    User.findOneAndUpdate = jest.fn().mockReturnValue({
+      populate: jest.fn().mockReturnValue({
+        populate: jest.fn().mockReturnValue({
+          populate: jest.fn().mockReturnValue({
+            populate: jest.fn().mockReturnValue({
+              exec: jest.fn().mockImplementationOnce((callback) => {
+                callback(false, {})
+              })
+            })
+          })
+        })
+      })
+    })
 
     authController.postMethod(req, res)
-
-    expect(res.send).toHaveBeenCalled()
+    expect(res.json).toHaveBeenCalled()
   })
 })

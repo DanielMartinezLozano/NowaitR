@@ -1,31 +1,27 @@
 /* eslint-disable react/no-this-in-sfc */
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
   View, Text, FlatList, Image, TouchableOpacity, Pressable,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import PropTypes from 'prop-types';
-import { useNavigation, CommonActions } from '@react-navigation/native';
+import { useNavigation, CommonActions, useFocusEffect } from '@react-navigation/native';
 import styles from './ProductsStyles';
 import {
   loadProductList, loadOrderProductsList, addOrderProduct,
   deleteOrderProduct, addFavProduct, loadFavProductsList, removeFavProduct,
 } from '../../redux/actions/productsActions';
 import FooterNav from '../FooterNav/FooterNav';
-import { productQuantity, isInFavs } from './productFunctions';
+import { productQuantity, isInFavs, translateCategory } from './productFunctions';
 
 function Products({
-  products, orderList, orderSize, dispatch, user, favList,
+  products, orderList, orderSize, dispatch, user, favList, route,
 }) {
+  const { category } = route.params;
   const navigation = useNavigation();
-  useEffect(
-    () => {
-      if (!products.length) {
-        dispatch(loadProductList());
-      }
-    },
-    [],
+  useFocusEffect(
+    useCallback(() => { dispatch(loadProductList(category)); }, [category]),
   );
 
   useEffect(
@@ -62,7 +58,7 @@ function Products({
                       size={32}
                     />
                   </TouchableOpacity>
-                  <Text style={styles.titleText}>Bebidas</Text>
+                  <Text style={styles.titleText}>{translateCategory(category)}</Text>
                 </View>
               </View>
             )}
@@ -102,7 +98,9 @@ function Products({
                       </Pressable>
                     )}
                 </View>
-                <Text style={styles.productTitle}>{item.name}</Text>
+                <View style={styles.productTitleContainer}>
+                  <Text style={styles.productTitle}>{item.name}</Text>
+                </View>
                 <Text style={styles.price}>{`${item.price.toFixed(2)} €`}</Text>
                 <View style={styles.buttons}>
                   <TouchableOpacity

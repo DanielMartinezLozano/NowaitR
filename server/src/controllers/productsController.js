@@ -1,9 +1,10 @@
 function productsController (Product) {
   function getMethod (req, res) {
-    Product.find({ })
-      .exec((errorFindProduct, product) => (errorFindProduct
+    const query = { category: req.params.category }
+    Product.find(query)
+      .exec((errorFindProduct, products) => (errorFindProduct
         ? res.send(errorFindProduct)
-        : res.json(product)))
+        : res.json(products)))
   }
 
   return { getMethod }

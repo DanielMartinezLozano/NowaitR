@@ -7,7 +7,7 @@ function productRouter (Product) {
   const product = productController(Product)
   const products = productsController(Product)
 
-  router.route('/')
+  router.route('/:category')
     .get(products.getMethod)
 
   router.route('/:productId')
