@@ -27,7 +27,7 @@ function Login({
         name: firebaseUser.name,
         email: firebaseUser.email,
       }));
-      navigation.navigate('categories');
+      navigation.navigate('qrcode');
     }
   }, [firebaseUser]);
 
@@ -39,7 +39,7 @@ function Login({
       onLoadEnd={() => { setState({ loading: false }); }}
     >
       <StatusBar barStyle="light-content" />
-      <Text style={styles.title}>¡Hola de nuevo!</Text>
+      <Text style={styles.title}>¡Bienvenido!</Text>
       <Text style={styles.subtitle}>Inicia sesión para empezar tu pedido</Text>
       <TouchableHighlight
         onPress={() => handleLoginClick()}

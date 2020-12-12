@@ -1,5 +1,5 @@
 const stylesType = {
-  black: '#303030',
+  black: '#202020',
   brown: '#ffa591',
   blue: '#8ae6ff',
   yellow: '#F4F7BE',
