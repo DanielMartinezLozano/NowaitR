@@ -53,7 +53,7 @@ export function sendUser(userInfo) {
   };
 }
 
-function logOutUserSuccess(firebaseUser) {
+export function logOutUserSuccess(firebaseUser) {
   return {
     type: actionTypes.LOGOUT_USER,
     firebaseUser,

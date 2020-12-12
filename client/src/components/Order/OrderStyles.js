@@ -89,11 +89,9 @@ const styles = {
     fontSize: 30,
   },
   submit: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 25,
+    height: 90,
+    padding: 0.5,
+    paddingBottom: 15,
     backgroundColor: stylesType.brown,
     shadowColor: '#000',
     shadowOffset: {
@@ -102,8 +100,15 @@ const styles = {
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
     elevation: 5,
+  },
+  submitTouchable: {
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   submitText: {
     color: 'white',
@@ -135,6 +140,52 @@ const styles = {
     fontSize: 20,
     fontWeight: '600',
     color: '#202020',
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    width: '90%',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.9,
+    shadowRadius: 300,
+    elevation: 5,
+  },
+  closeButton: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  modalContent: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 30,
+  },
+  textStyle: {
+    alignItems: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    fontSize: 22,
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  modalImage: {
+    textAlign: 'center',
+    height: 80,
+    width: 80,
   },
 };
 
