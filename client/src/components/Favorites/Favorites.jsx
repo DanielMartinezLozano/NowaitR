@@ -81,7 +81,9 @@ function Favorites({
                   />
                 </Pressable>
               </View>
-              <Text style={styles.productTitle}>{item.name}</Text>
+              <View style={styles.productTitleContainer}>
+                <Text style={styles.productTitle}>{item.name}</Text>
+              </View>
               <Text style={styles.price}>{`${item.price?.toFixed(2)} €`}</Text>
               <View style={styles.buttons}>
                 <TouchableOpacity

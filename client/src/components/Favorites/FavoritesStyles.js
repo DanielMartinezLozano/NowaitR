@@ -65,6 +65,11 @@ const styles = StyleSheet.create({
     color: stylesType.black,
     textAlign: 'center',
   },
+  productTitleContainer: {
+    display: 'flex',
+    width: '100%',
+    height: 40,
+  },
   productTitle: {
     color: stylesType.black,
     fontSize: 16,

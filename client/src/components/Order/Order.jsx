@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Text, View, FlatList,
+  Text, View, FlatList, Modal, Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -13,6 +13,7 @@ import styles from './OrderStyles';
 
 function Order({ orderList, dispatch, mongoUser }) {
   const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     if (!orderList?.length && mongoUser?.id) {
@@ -23,6 +24,8 @@ function Order({ orderList, dispatch, mongoUser }) {
 
   return (
     <View style={{ flex: 1 }} testID="Order">
+
+      <View />
       <FlatList
         ListHeaderComponent={(
           <View style={styles.titleContainer}>
@@ -79,14 +82,58 @@ function Order({ orderList, dispatch, mongoUser }) {
         <Text style={styles.totalText}>Total:</Text>
         <Text style={styles.totalAmount}>{`${totalPrice(orderList)} €`}</Text>
       </View>
-      <TouchableOpacity style={styles.submit}>
-        <Text style={styles.submitText}>Enviar pedido a cocina</Text>
-        <Icon
-          name="arrowright"
-          size={32}
-          color="white"
-        />
-      </TouchableOpacity>
+      <View style={styles.submit}>
+        <TouchableOpacity
+          style={styles.submitTouchable}
+          onPress={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <Text style={styles.submitText}>Enviar pedido a cocina</Text>
+          <Icon
+            name="arrowright"
+            size={32}
+            color="white"
+          />
+        </TouchableOpacity>
+      </View>
+
+      <Modal
+        animationType="slide"
+        transparent
+        visible={modalVisible}
+        onRequestClose={() => {
+          // Alert.alert('Modal has been closed.');
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Icon
+                color="#202020"
+                name="close"
+                size={30}
+              />
+            </TouchableOpacity>
+
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>Tu pedido ha sido recibido en cocina</Text>
+              <Text style={styles.modalText}>¡Marchando!</Text>
+              <Image
+                source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4e2ccad234f1c1cdcdb7a/7c3182c5d33a9e8092d1a8ed61b17acd/icons8-waiter-96.png' }}
+                style={styles.modalImage}
+              />
+            </View>
+
+          </View>
+        </View>
+      </Modal>
+
     </View>
   );
 }
