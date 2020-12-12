@@ -183,7 +183,6 @@ const styles = {
     textAlign: 'center',
   },
   modalImage: {
-    textAlign: 'center',
     height: 80,
     width: 80,
   },

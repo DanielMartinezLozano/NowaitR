@@ -12,6 +12,7 @@ import Order from './src/components/Order/Order';
 import Login from './src/components/Login/Login';
 import Loading from './src/components/Loading/Loading';
 import Favorites from './src/components/Favorites/Favorites';
+import QRcode from './src/components/QRcode/QRcode';
 
 try {
   firebase.initializeApp(firebaseConfig);
@@ -47,6 +48,7 @@ export default function App() {
               headerShown: false,
             }}
           />
+          <Stack.Screen name="qrcode" component={QRcode} options={header} />
           <Stack.Screen name="categories" component={Categories} options={header} />
           <Stack.Screen name="products" component={Products} options={header} />
           <Stack.Screen name="favorites" component={Favorites} options={header} />
