@@ -13,6 +13,8 @@ export default function authReducer(state = initialState, action = {}) {
 
     case actionTypes.ADD_TABLE:
     case actionTypes.SEND_USER:
+    case actionTypes.SEND_ORDER:
+    case actionTypes.CLEAR_ORDER:
       return {
         ...state,
         user: action.user,

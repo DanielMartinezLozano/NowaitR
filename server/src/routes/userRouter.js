@@ -39,6 +39,7 @@ function userRouter (User) {
 
   router.route('/order/:id')
     .put(order.putMethod)
+    .delete(order.deleteMethod)
 
   return router
 }

@@ -201,3 +201,53 @@ export function removeFavProduct(product, user) {
     }
   };
 }
+
+export function sendOrderError(error) {
+  return {
+    error,
+    type: actionTypes.SEND_ORDER_ERROR,
+  };
+}
+
+export function sendOrderSuccess(user) {
+  return {
+    type: actionTypes.SEND_ORDER,
+    user,
+  };
+}
+
+export function sendOrder(user) {
+  return async (dispatch) => {
+    try {
+      const updatedUser = await axios.put(`${endpoints.orderURL}${user.id}`);
+      dispatch(sendOrderSuccess(updatedUser.data));
+    } catch (error) {
+      dispatch(sendOrderError(error));
+    }
+  };
+}
+
+export function clearOrderError(error) {
+  return {
+    error,
+    type: actionTypes.CLEAR_ORDER_ERROR,
+  };
+}
+
+export function clearOrderSuccess(user) {
+  return {
+    type: actionTypes.CLEAR_ORDER,
+    user,
+  };
+}
+
+export function clearOrder(user) {
+  return async (dispatch) => {
+    try {
+      const updatedUser = await axios.delete(`${endpoints.orderURL}${user.id}`);
+      dispatch(clearOrderSuccess(updatedUser.data));
+    } catch (error) {
+      dispatch(clearOrderError(error));
+    }
+  };
+}
