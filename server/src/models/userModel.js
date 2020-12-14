@@ -7,7 +7,7 @@ const userSchema = new Schema({
   password: { type: String },
   favs: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
   admin: { type: Boolean },
-  restaurant: { type: Schema.Types.ObjectId, ref: 'Restaurant' },
+  table: { type: Number },
   saved: [{
     quantity: { type: Number },
     product: { type: Schema.Types.ObjectId, ref: 'Product' }

@@ -2,7 +2,6 @@ function userController (User) {
   function getMethod (req, res) {
     User.findOne({ _id: req.params.userId })
       .populate('favs')
-      .populate('restaurant')
       .populate('saved.product')
       .populate('sent.product')
       .exec((errorFindUser, user) => (errorFindUser

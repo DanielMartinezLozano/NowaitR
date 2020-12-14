@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "client",
+    "name": "NowaitR",
     "slug": "client",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4dc9993cb2246bcf252be/adf9cb7b2eede016f62aaa88e78d8488/favIcon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

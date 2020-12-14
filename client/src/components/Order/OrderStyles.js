@@ -121,7 +121,7 @@ const styles = {
     flexDirection: 'row',
     backgroundColor: 'white',
     marginBottom: 20,
-    padding: 30,
+    padding: 20,
     justifyContent: 'flex-end',
   },
   totalText: {

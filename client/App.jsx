@@ -13,6 +13,7 @@ import Login from './src/components/Login/Login';
 import Loading from './src/components/Loading/Loading';
 import Favorites from './src/components/Favorites/Favorites';
 import QRcode from './src/components/QRcode/QRcode';
+import NoQR from './src/components/NoQR/NoQR';
 
 try {
   firebase.initializeApp(firebaseConfig);
@@ -49,6 +50,7 @@ export default function App() {
             }}
           />
           <Stack.Screen name="qrcode" component={QRcode} options={header} />
+          <Stack.Screen name="noqr" component={NoQR} options={header} />
           <Stack.Screen name="categories" component={Categories} options={header} />
           <Stack.Screen name="products" component={Products} options={header} />
           <Stack.Screen name="favorites" component={Favorites} options={header} />

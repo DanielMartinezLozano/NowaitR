@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -7,12 +7,36 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 import FooterNav from '../FooterNav/FooterNav';
 import styles from './CategoriesStyles';
+import { loadFavProductsList, loadOrderProductsList } from '../../redux/actions/productsActions';
 
-function Categories({ orderSize, navigation }) {
+function Categories({
+  orderSize, navigation, dispatch, user, favList,
+}) {
+  useEffect(
+    () => {
+      if (user?.id) {
+        dispatch(loadOrderProductsList(user));
+      }
+    },
+    [user, orderSize],
+  );
+
+  useEffect(
+    () => {
+      if (!favList?.length && user?.id) {
+        dispatch(loadFavProductsList(user));
+      }
+    },
+    [favList.length],
+  );
+
   return (
     <View testID="categoriesContainer" style={styles.container}>
       <StatusBar barStyle="dark-content" />
-      <ScrollView style={styles.body}>
+      <ScrollView
+        style={styles.body}
+        showsVerticalScrollIndicator={false}
+      >
         <ImageBackground
           source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4dc9993cb2246bcf252bc/f0333c30571b6c012effbe9f303b7e4b/La_Foug%C3%A9re_Restaurant_at_sunset_-_Knockranny_House_Hotel_5.jpg' }}
           style={styles.image}
@@ -111,15 +135,29 @@ function Categories({ orderSize, navigation }) {
 Categories.propTypes = {
   orderSize: PropTypes.number,
   navigation: PropTypes.shape({ navigate: PropTypes.func }).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  favList: PropTypes.arrayOf(PropTypes.object),
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    favs: PropTypes.arrayOf(PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object,
+    ])),
+  }),
 };
 
 Categories.defaultProps = {
   orderSize: 0,
+  favList: [],
+  user: {},
 };
 
-function mapStateToProps({ orderReducer }) {
+function mapStateToProps({ orderReducer, authReducer, favsReducer }) {
   return {
     orderSize: orderReducer.orderSize,
+    orderList: orderReducer.orderList,
+    user: authReducer.user,
+    favList: favsReducer.favList,
   };
 }
 

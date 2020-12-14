@@ -18,6 +18,8 @@ const actionTypes = {
   SEND_USER: 'SEND_USER',
   SEND_USER_ERROR: 'SEND_USER_ERROR',
   LOGOUT_USER: 'LOGOUT_USER',
+  ADD_TABLE: 'ADD_TABLE',
+  ADD_TABLE_ERROR: 'ADD_TABLE_ERROR',
 };
 
 export default actionTypes;

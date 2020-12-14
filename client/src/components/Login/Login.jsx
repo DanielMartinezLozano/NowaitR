@@ -27,7 +27,10 @@ function Login({
         name: firebaseUser.name,
         email: firebaseUser.email,
       }));
-      navigation.navigate('qrcode');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'qrcode' }],
+      });
     }
   }, [firebaseUser]);
 
@@ -76,6 +79,7 @@ Login.propTypes = {
   dispatch: PropTypes.func.isRequired,
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
   }).isRequired,
   firebaseUser: PropTypes.shape({
     id: PropTypes.string,

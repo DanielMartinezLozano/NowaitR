@@ -74,6 +74,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 20,
   },
+  problemsQR: {
+    color: 'white',
+    textDecorationLine: 'underline',
+    textShadowColor: 'rgba(0, 0, 0, 0.7)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 3,
+  },
 });
 
 export default styles;
