@@ -7,8 +7,6 @@ const { connect } = require('mongoose')
 const bodyParser = require('body-parser')
 const User = require('./src/models/userModel')
 const Product = require('./src/models/productModel')
-// eslint-disable-next-line no-unused-vars
-const Restaurant = require('./src/models/restaurantModel')
 const productRouter = require('./src/routes/productRouter')(Product)
 const userRouter = require('./src/routes/UserRouter')(User)
 

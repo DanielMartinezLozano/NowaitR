@@ -66,3 +66,31 @@ export function logOutUser() {
     dispatch(logOutUserSuccess(user));
   };
 }
+
+function addTableNumSuccess(user) {
+  return {
+    type: actionTypes.ADD_TABLE,
+    user,
+  };
+}
+
+function addTableNumError(error) {
+  return {
+    type: actionTypes.ADD_TABLE_ERROR,
+    error,
+  };
+}
+
+export function addTableNum(table, user) {
+  return async (dispatch) => {
+    try {
+      const newUser = await axios.patch(
+        `${endpoints.tableURL}${user.id}`,
+        { table },
+      );
+      dispatch(addTableNumSuccess(newUser.data));
+    } catch (error) {
+      dispatch(addTableNumError(error));
+    }
+  };
+}

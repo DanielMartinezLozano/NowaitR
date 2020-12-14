@@ -22,6 +22,12 @@ export default function authReducer(state = initialState, action) {
         firebaseUser: action.firebaseUser,
       };
 
+    case actionTypes.ADD_TABLE:
+      return {
+        ...state,
+        user: action.user,
+      };
+
     default:
       return state;
   }
