@@ -1,6 +1,6 @@
 import stylesType from '../../../styles/stylesType';
 
-const styles = {
+const NoQRStyles = {
   container: {
     width: '100%',
     flex: 1,
@@ -71,4 +71,4 @@ const styles = {
   },
 };
 
-export default styles;
+export default NoQRStyles;

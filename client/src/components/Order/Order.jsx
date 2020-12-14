@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Text, View, FlatList, Modal, Image,
+  Text, View, Modal, Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation, CommonActions } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { addOrderProduct, loadOrderProductsList, deleteOrderProduct } from '../../redux/actions/productsActions';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  addOrderProduct, loadOrderProductsList, deleteOrderProduct, sendOrder, clearOrder,
+} from '../../redux/actions/productsActions';
 import totalPrice from './totalPrice';
 import styles from './OrderStyles';
 
-function Order({ orderList, dispatch, mongoUser }) {
+function Order({
+  orderList, sentList, dispatch, mongoUser,
+}) {
   const navigation = useNavigation();
-  const [modalVisible, setModalVisible] = useState(false);
+  const [orderModalVisible, setOrderModalVisible] = useState(false);
+  const [paymentModalVisible, setPaymentModalVisible] = useState(false);
 
   useEffect(() => {
     if (!orderList?.length && mongoUser?.id) {
@@ -24,30 +29,24 @@ function Order({ orderList, dispatch, mongoUser }) {
 
   return (
     <View style={{ flex: 1 }} testID="Order">
-
-      <View />
-      <FlatList
-        ListHeaderComponent={(
-          <View style={styles.titleContainer}>
-            <TouchableOpacity
-              onPress={() => navigation.dispatch(CommonActions.goBack())}
-            >
-              <Icon
-                name="close"
-                size={32}
-              />
-            </TouchableOpacity>
-            <Text style={styles.title}>Mi Pedido</Text>
-            {!orderList.length
-                && <Text style={styles.noOrder}>¡Añade productos para hacer el pedido!</Text>}
-          </View>
-    )}
-        data={orderList}
-        horizontal={false}
-        // eslint-disable-next-line no-unused-vars
-        keyExtractor={(item, _index) => item._id}
-        renderItem={({ item }) => (
-          <View style={styles.productView}>
+      <ScrollView>
+        <View style={styles.titleContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.dispatch(CommonActions.goBack())}
+          >
+            <Icon
+              name="close"
+              size={32}
+            />
+          </TouchableOpacity>
+          <Text style={styles.title}>Mi Pedido</Text>
+        </View>
+        {orderList.length !== 0
+        && <Text style={styles.sectionTitle}>Pendientes de enviar:</Text>}
+        {!orderList.length
+                && <Text style={styles.noOrder}>¡Añade productos para hacer un pedido!</Text>}
+        {orderList.map((item) => (
+          <View style={styles.productView} key={`${item.product.name}-saved`}>
             <View style={styles.buttons}>
               <TouchableOpacity
                 style={styles.button}
@@ -76,17 +75,66 @@ function Order({ orderList, dispatch, mongoUser }) {
               </View>
             </View>
           </View>
-        )}
-      />
+        ))}
+
+        {sentList.length !== 0
+        && <Text style={styles.sectionTitle}>Pedidos realizados:</Text>}
+        {sentList.map((item) => (
+          <View style={{ ...styles.productView, backgroundColor: '#d3d3d3' }} key={`${item.product.id}-${item.quantity * item.product.price}`}>
+            <View style={styles.buttons}>
+              <Text style={styles.quantity}>{`${item.quantity} x`}</Text>
+              <View style={styles.productInfo}>
+                <Text style={styles.productTitle}>{item.product.name}</Text>
+                <Text style={styles.price}>{`${item.product.price?.toFixed(2)} €`}</Text>
+              </View>
+              <Text style={styles.totalSentProduct}>{`${item.quantity * item.product.price} €`}</Text>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
+
       <View style={styles.totalContainer}>
-        <Text style={styles.totalText}>Total:</Text>
-        <Text style={styles.totalAmount}>{`${totalPrice(orderList)} €`}</Text>
+        <View>
+          {orderList.length === 0 && sentList.length !== 0
+        && (
+        <TouchableOpacity
+          style={styles.paymentButton}
+          onPress={() => { setPaymentModalVisible(!paymentModalVisible); }}
+        >
+          <Image
+            source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4e2ccad234f1c1cdcdb7a/cc35576d52fd092584d7de3d2af8fbc7/icons8-euro-96.png' }}
+            style={styles.paymentImage}
+          />
+          <Text style={styles.paymentText}>Pagado</Text>
+        </TouchableOpacity>
+        )}
+        </View>
+        <View style={styles.totalTextAndNumber}>
+          <Text style={styles.totalText}>Total:</Text>
+          <Text style={styles.totalAmount}>{`${totalPrice(orderList, sentList)} €`}</Text>
+        </View>
       </View>
+
+      {orderList.length === 0
+      && (
+      <View style={{ ...styles.submit, backgroundColor: '#7e7e7e' }}>
+        <TouchableOpacity
+          style={styles.submitTouchable}
+          disabled
+        >
+          <Text style={styles.submitText}>Añade productos para pedir</Text>
+        </TouchableOpacity>
+      </View>
+      )}
+
+      {orderList.length !== 0
+      && (
       <View style={styles.submit}>
         <TouchableOpacity
           style={styles.submitTouchable}
           onPress={() => {
-            setModalVisible(!modalVisible);
+            dispatch(sendOrder(mongoUser));
+            setOrderModalVisible(!orderModalVisible);
           }}
         >
           <Text style={styles.submitText}>Enviar pedido a cocina</Text>
@@ -97,11 +145,12 @@ function Order({ orderList, dispatch, mongoUser }) {
           />
         </TouchableOpacity>
       </View>
+      )}
 
       <Modal
         animationType="slide"
         transparent
-        visible={modalVisible}
+        visible={orderModalVisible}
         onRequestClose={() => {
           // Alert.alert('Modal has been closed.');
         }}
@@ -111,7 +160,7 @@ function Order({ orderList, dispatch, mongoUser }) {
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => {
-                setModalVisible(!modalVisible);
+                setOrderModalVisible(!orderModalVisible);
               }}
             >
               <Icon
@@ -134,6 +183,55 @@ function Order({ orderList, dispatch, mongoUser }) {
         </View>
       </Modal>
 
+      <Modal
+        animationType="slide"
+        transparent
+        visible={paymentModalVisible}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => {
+                setPaymentModalVisible(!paymentModalVisible);
+              }}
+            >
+              <Icon
+                color="#202020"
+                name="close"
+                size={30}
+              />
+            </TouchableOpacity>
+
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>¿Has realizado el pago?</Text>
+              <View style={styles.yesNoContainer}>
+                <TouchableOpacity
+                  style={styles.yesNoButton}
+                  onPress={() => {
+                    dispatch(clearOrder(mongoUser));
+                    setPaymentModalVisible(!paymentModalVisible);
+                  }}
+                >
+                  <Text style={styles.yesNoText}>Sí</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.yesNoButton}
+                  onPress={() => setPaymentModalVisible(!paymentModalVisible)}
+                >
+                  <Text style={styles.yesNoText}>No</Text>
+                </TouchableOpacity>
+              </View>
+              <Image
+                source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4e2ccad234f1c1cdcdb7a/328be75a59c669aebec299e9e234dbd8/icons8-cash-register-euro-96.png' }}
+                style={styles.modalImage}
+              />
+            </View>
+
+          </View>
+        </View>
+      </Modal>
+
     </View>
   );
 }
@@ -141,16 +239,19 @@ function Order({ orderList, dispatch, mongoUser }) {
 Order.propTypes = {
   dispatch: PropTypes.func.isRequired,
   orderList: PropTypes.arrayOf(PropTypes.object),
+  sentList: PropTypes.arrayOf(PropTypes.object),
   mongoUser: PropTypes.shape({ id: PropTypes.string }),
 };
 
 Order.defaultProps = {
   orderList: [],
+  sentList: [],
   mongoUser: {},
 };
 
 function mapStateToProps({ orderReducer, authReducer }) {
   return {
+    sentList: orderReducer.sentList,
     orderList: orderReducer.orderList,
     mongoUser: authReducer.user,
   };

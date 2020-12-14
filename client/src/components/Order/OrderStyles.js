@@ -1,6 +1,6 @@
 import stylesType from '../../../styles/stylesType';
 
-const styles = {
+const OrderStyles = {
   titleContainer: {
     margin: 20,
   },
@@ -32,6 +32,7 @@ const styles = {
   },
   productInfo: {
     marginLeft: 10,
+    flex: 1,
   },
   productView: {
     display: 'flex',
@@ -44,6 +45,12 @@ const styles = {
   list: {
     display: 'flex',
     flexDirection: 'row',
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    margin: 10,
+    marginTop: 20,
   },
   item: {
     backgroundColor: '#202020',
@@ -87,6 +94,11 @@ const styles = {
   },
   quantity: {
     fontSize: 30,
+    color: stylesType.black,
+  },
+  totalSentProduct: {
+    fontSize: 22,
+    color: stylesType.black,
   },
   submit: {
     height: 90,
@@ -110,19 +122,45 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
+  paymentText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+    margin: 5,
+  },
   submitText: {
     color: 'white',
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: '600',
-    marginRight: 10,
+    margin: 5,
+  },
+  paymentButton: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#27AE60',
+    padding: 2,
+    borderRadius: 20,
+    margin: 0,
+  },
+  paymentImage: {
+    width: 32,
+    height: 32,
   },
   totalContainer: {
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: 'white',
     marginBottom: 20,
-    padding: 20,
-    justifyContent: 'flex-end',
+    padding: 15,
+    justifyContent: 'space-between',
+  },
+  totalTextAndNumber: {
+    display: 'flex',
+    flexDirection: 'row',
+    padding: 10,
   },
   totalText: {
     fontSize: 20,
@@ -178,14 +216,35 @@ const styles = {
     textAlign: 'center',
   },
   modalText: {
-    fontSize: 22,
     marginBottom: 15,
+    fontSize: 22,
     textAlign: 'center',
   },
   modalImage: {
+    marginTop: 20,
     height: 80,
     width: 80,
   },
+  yesNoContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    margin: 20,
+  },
+  yesNoButton: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 35,
+    width: 80,
+    paddingHorizontal: 25,
+    backgroundColor: stylesType.brown,
+    marginHorizontal: 20,
+    borderRadius: 30,
+  },
+  yesNoText: {
+    fontSize: 22,
+    color: 'white',
+  },
 };
 
-export default styles;
+export default OrderStyles;

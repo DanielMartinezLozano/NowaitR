@@ -141,7 +141,13 @@ Products.propTypes = {
   orderList: PropTypes.arrayOf(PropTypes.object),
   favList: PropTypes.arrayOf(PropTypes.object),
   orderSize: PropTypes.number.isRequired,
-  user: PropTypes.shape({ id: PropTypes.string, favs: PropTypes.arrayOf(PropTypes.object) }),
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    favs: PropTypes.arrayOf(PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object,
+    ])),
+  }),
   route: PropTypes.shape({ params: PropTypes.shape({ category: PropTypes.string }) }).isRequired,
 };
 

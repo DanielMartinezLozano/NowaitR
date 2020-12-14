@@ -19,11 +19,11 @@ function userFavController (User) {
           } else {
             success.favs.push(productId)
             await success.save()
-            User.findOne(query).populate('favs').exec((error, success) => {
-              if (error) {
-                res.send(error)
+            User.findOne(query).populate('favs').exec((err, succ) => {
+              if (err) {
+                res.send(err)
               }
-              res.json(success)
+              res.json(succ)
             })
           }
         })

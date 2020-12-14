@@ -1,6 +1,6 @@
 import stylesType from '../../../styles/stylesType';
 
-const styles = {
+const FooterNavStyles = {
   container: {
     backgroundColor: stylesType.gray,
     display: 'flex',
@@ -76,4 +76,4 @@ const styles = {
   },
 };
 
-export default styles;
+export default FooterNavStyles;

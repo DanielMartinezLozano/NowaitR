@@ -1,4 +1,4 @@
-const ip = '192.168.0.34';
+const ip = '192.168.1.122';
 
 const endpoints = {
   productsURL: `http://${ip}:4500/products/`,
@@ -7,6 +7,7 @@ const endpoints = {
   usersURL: `http://${ip}:4500/users/auth/`,
   userFavURL: `http://${ip}:4500/users/favs/`,
   tableURL: `http://${ip}:4500/users/table/`,
+  orderURL: `http://${ip}:4500/users/order/`,
 };
 
 export default endpoints;

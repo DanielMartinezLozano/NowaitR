@@ -15,12 +15,13 @@ function userController (User) {
 
     User.findOne(query)
       .populate('saved.product')
+      .populate('sent.product')
       .exec(
         (error, success) => {
           if (error) {
             return res.send(error)
           }
-          const productFound = success.saved.find((productFound) => productFound.product._id.toString() === productId)
+          const productFound = success.saved.find((prodFount) => prodFount.product._id.toString() === productId)
           if (productFound) {
             productFound.quantity += 1
           } else {
@@ -37,11 +38,12 @@ function userController (User) {
 
     User.findOne(query)
       .populate('saved.product')
+      .populate('sent.product')
       .exec((error, success) => {
         if (error) {
           return res.send(error)
         }
-        const productFound = success.saved.find((productFound) => productFound.product._id.toString() === productId)
+        const productFound = success.saved.find((prodFound) => prodFound.product._id.toString() === productId)
         if (productFound) {
           if (productFound.quantity === 1) {
             const index = success.saved.indexOf(productFound)

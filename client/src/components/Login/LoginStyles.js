@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import stylesType from '../../../styles/stylesType';
 
-const styles = StyleSheet.create({
+const LoginStyles = StyleSheet.create({
   container: {
     flex: 1,
     display: 'flex',
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default styles;
+export default LoginStyles;

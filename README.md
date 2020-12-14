@@ -11,10 +11,12 @@ It can be used both for ordering directly from the table without the need of cal
 ## Technologies
 
 - React Native
+- Expo
 - Jest
-- TypeScript
+- JavaScript
 - Express.js
 - MongoDB
 - Mongoose
+- Firebase
 - Git
 - SonarQube
