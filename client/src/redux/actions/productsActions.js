@@ -27,9 +27,10 @@ export function loadProductList(category) {
   };
 }
 
-export function loadOrderProductsSuccess(orderList) {
+export function loadOrderProductsSuccess(orderList, sentList) {
   return {
     orderList,
+    sentList,
     type: actionTypes.LOAD_ORDER_PRODUCTS,
   };
 }
@@ -46,8 +47,9 @@ export function loadOrderProductsList(mongoUser) {
     try {
       const user = await axios.get(`${endpoints.authURL}${mongoUser.id}`);
       const orderList = user.data.saved;
+      const sentList = user.data.sent;
 
-      dispatch(loadOrderProductsSuccess(orderList));
+      dispatch(loadOrderProductsSuccess(orderList, sentList));
     } catch (error) {
       dispatch(loadOrderProductsError(error));
     }

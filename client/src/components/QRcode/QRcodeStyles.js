@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import stylesType from '../../../styles/stylesType';
 
-const styles = StyleSheet.create({
+const QRcodeStyles = StyleSheet.create({
   wrapper: {
     flex: 1,
   },
@@ -83,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default styles;
+export default QRcodeStyles;

@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import stylesType from '../../../styles/stylesType';
 
-const styles = StyleSheet.create({
+const FavoritesStyles = StyleSheet.create({
   body: {
     display: 'flex',
     justifyContent: 'center',
@@ -124,4 +124,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default styles;
+export default FavoritesStyles;

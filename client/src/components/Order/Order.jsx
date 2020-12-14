@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Text, View, FlatList, Modal, Image,
+  Text, View, Modal, Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation, CommonActions } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { addOrderProduct, loadOrderProductsList, deleteOrderProduct } from '../../redux/actions/productsActions';
 import totalPrice from './totalPrice';
 import styles from './OrderStyles';
 
-function Order({ orderList, dispatch, mongoUser }) {
+function Order({
+  orderList, sentList, dispatch, mongoUser,
+}) {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -24,30 +26,24 @@ function Order({ orderList, dispatch, mongoUser }) {
 
   return (
     <View style={{ flex: 1 }} testID="Order">
+      <ScrollView>
+        <View style={styles.titleContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.dispatch(CommonActions.goBack())}
+          >
+            <Icon
+              name="close"
+              size={32}
+            />
+          </TouchableOpacity>
+          <Text style={styles.title}>Mi Pedido</Text>
+        </View>
 
-      <View />
-      <FlatList
-        ListHeaderComponent={(
-          <View style={styles.titleContainer}>
-            <TouchableOpacity
-              onPress={() => navigation.dispatch(CommonActions.goBack())}
-            >
-              <Icon
-                name="close"
-                size={32}
-              />
-            </TouchableOpacity>
-            <Text style={styles.title}>Mi Pedido</Text>
-            {!orderList.length
+        <Text style={styles.sectionTitle}>Pendientes de enviar:</Text>
+        {!orderList.length
                 && <Text style={styles.noOrder}>¡Añade productos para hacer el pedido!</Text>}
-          </View>
-    )}
-        data={orderList}
-        horizontal={false}
-        // eslint-disable-next-line no-unused-vars
-        keyExtractor={(item, _index) => item._id}
-        renderItem={({ item }) => (
-          <View style={styles.productView}>
+        {orderList.map((item) => (
+          <View style={styles.productView} key={`${item.product.name}-saved`}>
             <View style={styles.buttons}>
               <TouchableOpacity
                 style={styles.button}
@@ -76,8 +72,42 @@ function Order({ orderList, dispatch, mongoUser }) {
               </View>
             </View>
           </View>
-        )}
-      />
+        ))}
+
+        <Text style={styles.sectionTitle}>Pedidos realizados:</Text>
+        {sentList.map((item) => (
+          <View style={{ ...styles.productView, backgroundColor: '#d3d3d3' }} key={`${item.product.name}-sent`}>
+            <View style={styles.buttons}>
+              <TouchableOpacity
+                style={{ ...styles.button, backgroundColor: '#a8a8a8' }}
+                disabled
+              >
+                <Icon
+                  color="#FFF"
+                  name="minus"
+                  size={30}
+                />
+              </TouchableOpacity>
+              <Text style={styles.quantity}>{item.quantity}</Text>
+              <TouchableOpacity
+                style={{ ...styles.button, backgroundColor: '#a8a8a8' }}
+                disabled
+              >
+                <Icon
+                  color="#FFF"
+                  name="plus"
+                  size={30}
+                />
+              </TouchableOpacity>
+              <View style={styles.productInfo}>
+                <Text style={styles.productTitle}>{item.product.name}</Text>
+                <Text style={styles.price}>{`${item.product.price?.toFixed(2)} €`}</Text>
+              </View>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
+
       <View style={styles.totalContainer}>
         <Text style={styles.totalText}>Total:</Text>
         <Text style={styles.totalAmount}>{`${totalPrice(orderList)} €`}</Text>
@@ -141,16 +171,19 @@ function Order({ orderList, dispatch, mongoUser }) {
 Order.propTypes = {
   dispatch: PropTypes.func.isRequired,
   orderList: PropTypes.arrayOf(PropTypes.object),
+  sentList: PropTypes.arrayOf(PropTypes.object),
   mongoUser: PropTypes.shape({ id: PropTypes.string }),
 };
 
 Order.defaultProps = {
   orderList: [],
+  sentList: [],
   mongoUser: {},
 };
 
 function mapStateToProps({ orderReducer, authReducer }) {
   return {
+    sentList: orderReducer.sentList,
     orderList: orderReducer.orderList,
     mongoUser: authReducer.user,
   };

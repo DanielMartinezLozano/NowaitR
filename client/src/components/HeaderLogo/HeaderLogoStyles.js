@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import stylesType from '../../../styles/stylesType';
 
-const styles = StyleSheet.create({
+const HeaderLogoStyles = StyleSheet.create({
   container: {
     backgroundColor: stylesType.yellow,
     elevation: 2,
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default styles;
+export default HeaderLogoStyles;

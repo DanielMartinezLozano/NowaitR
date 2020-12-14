@@ -4,7 +4,7 @@ function authController (User) {
     User.findOneAndUpdate(query, req.body, { upsert: true, new: true, useFindAndModify: false })
       .populate('favs')
       .populate('saved.product')
-      .populate('sent')
+      .populate('sent.product')
       .exec((error, user) => { error ? res.send(error) : res.json(user) })
   }
 
@@ -13,7 +13,7 @@ function authController (User) {
     User.findOne(query)
       .populate('favs')
       .populate('saved.product')
-      .populate('sent')
+      .populate('sent.product')
       .exec((error, user) => { error ? res.send(error) : res.json(user) })
   }
 

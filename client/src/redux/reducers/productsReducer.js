@@ -3,14 +3,12 @@ import actionTypes from '../actions/action-types';
 
 const initialState = {};
 
-export default function productsReducer(state = initialState, action) {
-  switch (action.type) {
-    case actionTypes.LOAD_PRODUCTS:
-      return {
-        ...state,
-        productsList: action.productsList,
-      };
-    default:
-      return state;
+export default function productsReducer(state = initialState, action = {}) {
+  if (action.type === actionTypes.LOAD_PRODUCTS) {
+    return {
+      ...state,
+      productsList: action.productsList,
+    };
   }
+  return state;
 }

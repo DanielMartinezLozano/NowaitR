@@ -4,6 +4,7 @@ const usersController = require('../controllers/usersController')
 const authController = require('../controllers/authController')
 const userFavController = require('../controllers/userFavController')
 const tableController = require('../controllers/tableController')
+const orderController = require('../controllers/orderController')
 
 function userRouter (User) {
   const router = express.Router()
@@ -12,6 +13,7 @@ function userRouter (User) {
   const users = usersController(User)
   const auth = authController(User)
   const table = tableController(User)
+  const order = orderController(User)
 
   router.route('/')
     .get(users.getMethod)
@@ -34,6 +36,9 @@ function userRouter (User) {
 
   router.route('/table/:id')
     .patch(table.patchMethod)
+
+  router.route('/order/:id')
+    .put(order.putMethod)
 
   return router
 }

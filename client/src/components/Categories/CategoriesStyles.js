@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import stylesType from '../../../styles/stylesType';
 
-const styles = StyleSheet.create({
+const CategoriesStyles = StyleSheet.create({
   container: {
     height: '100%',
   },
@@ -77,4 +77,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default styles;
+export default CategoriesStyles;

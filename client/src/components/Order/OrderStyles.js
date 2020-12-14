@@ -1,6 +1,6 @@
 import stylesType from '../../../styles/stylesType';
 
-const styles = {
+const OrderStyles = {
   titleContainer: {
     margin: 20,
   },
@@ -44,6 +44,13 @@ const styles = {
   list: {
     display: 'flex',
     flexDirection: 'row',
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    margin: 10,
+    marginTop: 20,
+
   },
   item: {
     backgroundColor: '#202020',
@@ -188,4 +195,4 @@ const styles = {
   },
 };
 
-export default styles;
+export default OrderStyles;
