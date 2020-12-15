@@ -13,7 +13,7 @@ const userRouter = require('./src/routes/UserRouter')(User)
 const app = express()
 app.use(cors())
 const port = process.env.PORT || 4500
-const dataBaseURL = 'mongodb+srv://daniel:admin@nowaitr.w6gix.mongodb.net/NowaitR?retryWrites=true&w=majority'
+const dataBaseURL = require('../mongoURL')
 connect(dataBaseURL, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.use(morgan('tiny'))

@@ -328,3 +328,6 @@ temp/
 
 # Firebase
 .firebase/
+
+# MongoDB url
+mongoURL.js
