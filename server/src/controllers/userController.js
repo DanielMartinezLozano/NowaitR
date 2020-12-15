@@ -51,6 +51,8 @@ function userController (User) {
           } else {
             productFound.quantity -= 1
           }
+        } else {
+          res.send(error)
         }
         success.save()
         res.send(success)

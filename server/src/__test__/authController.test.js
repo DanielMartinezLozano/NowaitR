@@ -19,10 +19,8 @@ describe('authController getMethod', () => {
       populate: jest.fn().mockReturnValue({
         populate: jest.fn().mockReturnValue({
           populate: jest.fn().mockReturnValue({
-            populate: jest.fn().mockReturnValue({
-              exec: jest.fn().mockImplementationOnce((callback) => {
-                callback(false, {})
-              })
+            exec: jest.fn().mockImplementationOnce((callback) => {
+              callback(false, {})
             })
           })
         })
@@ -46,10 +44,8 @@ describe('authController getMethod', () => {
       populate: jest.fn().mockReturnValue({
         populate: jest.fn().mockReturnValue({
           populate: jest.fn().mockReturnValue({
-            populate: jest.fn().mockReturnValue({
-              exec: jest.fn().mockImplementationOnce((callback) => {
-                callback(true, {})
-              })
+            exec: jest.fn().mockImplementationOnce((callback) => {
+              callback(true, {})
             })
           })
         })
@@ -75,10 +71,8 @@ describe('authController postMethod', () => {
       populate: jest.fn().mockReturnValue({
         populate: jest.fn().mockReturnValue({
           populate: jest.fn().mockReturnValue({
-            populate: jest.fn().mockReturnValue({
-              exec: jest.fn().mockImplementationOnce((callback) => {
-                callback(true, {})
-              })
+            exec: jest.fn().mockImplementationOnce((callback) => {
+              callback(true, {})
             })
           })
         })
@@ -101,10 +95,8 @@ describe('authController postMethod', () => {
       populate: jest.fn().mockReturnValue({
         populate: jest.fn().mockReturnValue({
           populate: jest.fn().mockReturnValue({
-            populate: jest.fn().mockReturnValue({
-              exec: jest.fn().mockImplementationOnce((callback) => {
-                callback(false, {})
-              })
+            exec: jest.fn().mockImplementationOnce((callback) => {
+              callback(false, {})
             })
           })
         })

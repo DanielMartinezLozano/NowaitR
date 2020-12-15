@@ -1,4 +1,4 @@
-const ip = '192.168.1.122';
+const ip = '192.168.0.34';
 
 const endpoints = {
   productsURL: `http://${ip}:4500/products/`,
