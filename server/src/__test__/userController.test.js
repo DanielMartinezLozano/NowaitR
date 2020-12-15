@@ -23,10 +23,8 @@ describe('getMethod userController', () => {
       populate: jest.fn().mockReturnValue({
         populate: jest.fn().mockReturnValue({
           populate: jest.fn().mockReturnValue({
-            populate: jest.fn().mockReturnValue({
-              exec: jest.fn().mockImplementationOnce((callback) => {
-                callback(false, {})
-              })
+            exec: jest.fn().mockImplementationOnce((callback) => {
+              callback(false, {})
             })
           })
         })
@@ -41,10 +39,8 @@ describe('getMethod userController', () => {
       populate: jest.fn().mockReturnValue({
         populate: jest.fn().mockReturnValue({
           populate: jest.fn().mockReturnValue({
-            populate: jest.fn().mockReturnValue({
-              exec: jest.fn().mockImplementationOnce((callback) => {
-                callback(true, {})
-              })
+            exec: jest.fn().mockImplementationOnce((callback) => {
+              callback(true, {})
             })
           })
         })
@@ -77,8 +73,10 @@ describe('patchMethod userController', () => {
   test('should call response send error on patchMethod', async () => {
     User.findOne = jest.fn().mockReturnValue({
       populate: jest.fn().mockReturnValue({
-        exec: jest.fn((callback) => {
-          callback(true, {})
+        populate: jest.fn().mockReturnValue({
+          exec: jest.fn((callback) => {
+            callback(true, {})
+          })
         })
       })
     })
@@ -90,8 +88,10 @@ describe('patchMethod userController', () => {
   test('should call response send success on patchMethod adding quantity', async () => {
     User.findOne = jest.fn().mockReturnValue({
       populate: jest.fn().mockReturnValue({
-        exec: jest.fn((callback) => {
-          callback(false, { saved: [{ product: { _id: 1 }, quantity: 0 }], save: jest.fn() })
+        populate: jest.fn().mockReturnValue({
+          exec: jest.fn((callback) => {
+            callback(false, { saved: [{ product: { _id: 1 }, quantity: 0 }], save: jest.fn() })
+          })
         })
       })
     })
@@ -103,8 +103,10 @@ describe('patchMethod userController', () => {
   test('should call response send success on patchMethod pushing a product', async () => {
     User.findOne = jest.fn().mockReturnValue({
       populate: jest.fn().mockReturnValue({
-        exec: jest.fn((callback) => {
-          callback(false, { saved: [{ product: { _id: 2 }, quantity: 0 }], save: jest.fn() })
+        populate: jest.fn().mockReturnValue({
+          exec: jest.fn((callback) => {
+            callback(false, { saved: [{ product: { _id: 2 }, quantity: 0 }], save: jest.fn() })
+          })
         })
       })
     })
@@ -136,8 +138,10 @@ describe('deleteMethod userController', () => {
   test('should call response send error on deleteMethod', async () => {
     User.findOne = jest.fn().mockReturnValue({
       populate: jest.fn().mockReturnValue({
-        exec: jest.fn((callback) => {
-          callback(true, {})
+        populate: jest.fn().mockReturnValue({
+          exec: jest.fn((callback) => {
+            callback(true, {})
+          })
         })
       })
     })
@@ -149,8 +153,10 @@ describe('deleteMethod userController', () => {
   test('should call response send success on deleteMethod substracting quantity', async () => {
     User.findOne = jest.fn().mockReturnValue({
       populate: jest.fn().mockReturnValue({
-        exec: jest.fn((callback) => {
-          callback(false, { saved: [{ product: { _id: 1 }, quantity: 1 }], save: jest.fn() })
+        populate: jest.fn().mockReturnValue({
+          exec: jest.fn((callback) => {
+            callback(false, { saved: [{ product: { _id: 1 }, quantity: 1 }], save: jest.fn() })
+          })
         })
       })
     })
@@ -159,11 +165,28 @@ describe('deleteMethod userController', () => {
     expect(res.send).toHaveBeenCalled()
   })
 
-  test('should call response send success on deleteMethod pushing a product', async () => {
+  test('should call response send success on deleteMethod removing a product', async () => {
     User.findOne = jest.fn().mockReturnValue({
       populate: jest.fn().mockReturnValue({
-        exec: jest.fn((callback) => {
-          callback(false, { saved: [{ product: { _id: 1 }, quantity: 2 }], save: jest.fn() })
+        populate: jest.fn().mockReturnValue({
+          exec: jest.fn((callback) => {
+            callback(false, { saved: [{ product: { _id: 1 }, quantity: 2 }], save: jest.fn() })
+          })
+        })
+      })
+    })
+
+    userController.deleteMethod(req, res)
+    expect(res.send).toHaveBeenCalled()
+  })
+
+  test('should call response send error on deleteMethod not finding a product', async () => {
+    User.findOne = jest.fn().mockReturnValue({
+      populate: jest.fn().mockReturnValue({
+        populate: jest.fn().mockReturnValue({
+          exec: jest.fn((callback) => {
+            callback(false, { saved: [], save: jest.fn() })
+          })
         })
       })
     })

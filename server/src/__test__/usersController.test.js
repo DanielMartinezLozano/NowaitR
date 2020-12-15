@@ -11,10 +11,8 @@ describe('usersController', () => {
     }
     User.find = jest.fn().mockReturnValue({
       populate: jest.fn().mockReturnValue({
-        populate: jest.fn().mockReturnValue({
-          exec: jest.fn().mockImplementationOnce((callback) => {
-            callback(false, {})
-          })
+        exec: jest.fn().mockImplementationOnce((callback) => {
+          callback(false, {})
         })
       })
     })
@@ -29,10 +27,8 @@ describe('usersController', () => {
 
     User.find = jest.fn().mockReturnValue({
       populate: jest.fn().mockReturnValue({
-        populate: jest.fn().mockReturnValue({
-          exec: jest.fn().mockImplementationOnce((callback) => {
-            callback(true, {})
-          })
+        exec: jest.fn().mockImplementationOnce((callback) => {
+          callback(true, {})
         })
       })
     })

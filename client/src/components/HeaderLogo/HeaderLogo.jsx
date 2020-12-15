@@ -11,7 +11,7 @@ function HeaderLogo({ dispatch }) {
   const navigation = useNavigation();
 
   const renderLogOut = () => (
-    <TouchableOpacity testID="signOutButton" onPress={() => { dispatch(logOutUser()); return navigation.navigate('login'); }}>
+    <TouchableOpacity testID="signOutButton" onPress={() => { dispatch(logOutUser()); return navigation.reset({ index: 0, routes: [{ name: 'login' }] }); }}>
       <Image
         style={styles.logout}
         source={{ uri: 'https://cdn2.iconfinder.com/data/icons/picons-essentials/57/logout-512.png' }}

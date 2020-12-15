@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { logOutUser } from '../../redux/actions/userActions';
 import {
   addOrderProduct, loadOrderProductsList, deleteOrderProduct, sendOrder, clearOrder,
 } from '../../redux/actions/productsActions';
@@ -19,6 +20,7 @@ function Order({
   const navigation = useNavigation();
   const [orderModalVisible, setOrderModalVisible] = useState(false);
   const [paymentModalVisible, setPaymentModalVisible] = useState(false);
+  const [exitModalVisible, setExitModalVisible] = useState(false);
 
   useEffect(() => {
     if (!orderList?.length && mongoUser?.id) {
@@ -204,13 +206,14 @@ function Order({
             </TouchableOpacity>
 
             <View style={styles.modalContent}>
-              <Text style={styles.modalText}>¿Has realizado el pago?</Text>
+              <Text style={styles.modalText}>¿Has realizado el pago en caja?</Text>
               <View style={styles.yesNoContainer}>
                 <TouchableOpacity
                   style={styles.yesNoButton}
                   onPress={() => {
                     dispatch(clearOrder(mongoUser));
                     setPaymentModalVisible(!paymentModalVisible);
+                    setExitModalVisible(!exitModalVisible);
                   }}
                 >
                   <Text style={styles.yesNoText}>Sí</Text>
@@ -226,6 +229,47 @@ function Order({
                 source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4e2ccad234f1c1cdcdb7a/328be75a59c669aebec299e9e234dbd8/icons8-cash-register-euro-96.png' }}
                 style={styles.modalImage}
               />
+            </View>
+
+          </View>
+        </View>
+      </Modal>
+
+      <Modal
+        animationType="slide"
+        transparent
+        visible={exitModalVisible}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => {
+                setExitModalVisible(!exitModalVisible);
+              }}
+            >
+              <Icon
+                color="#202020"
+                name="close"
+                size={30}
+              />
+            </TouchableOpacity>
+
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>Gracias por tu visita,</Text>
+              <Text style={styles.modalText}>¡Hasta pronto!</Text>
+              <View style={styles.yesNoContainer}>
+                <TouchableOpacity
+                  style={{ ...styles.yesNoButton, width: 180, height: 40 }}
+                  onPress={() => {
+                    setExitModalVisible(!exitModalVisible);
+                    dispatch(logOutUser());
+                    navigation.reset({ index: 0, routes: [{ name: 'login' }] });
+                  }}
+                >
+                  <Text style={styles.yesNoText}>Cerrar sesión</Text>
+                </TouchableOpacity>
+              </View>
             </View>
 
           </View>
