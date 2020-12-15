@@ -22,8 +22,9 @@ function userFavController (User) {
             User.findOne(query).populate('favs').exec((err, succ) => {
               if (err) {
                 res.send(err)
+              } else {
+                res.json(succ)
               }
-              res.json(succ)
             })
           }
         })
