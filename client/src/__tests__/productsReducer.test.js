@@ -12,4 +12,9 @@ describe('productsReducer', () => {
     const action = { type: null, productsList: [] };
     expect(productsReducer(initialState, action)).toEqual({ });
   });
+
+  test('action.type load products without action should return {}', () => {
+    const initialState = {};
+    expect(productsReducer(initialState)).toEqual({ });
+  });
 });

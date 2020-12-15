@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import signinWithGoogle from '../../config';
 import {
-  loginGoogle, logOutUser, sendUser, logOutUserSuccess,
+  loginGoogle, logOutUser, sendUser, logOutUserSuccess, addTableNum,
 } from '../redux/actions/userActions';
 
 const middlewares = [thunk];
@@ -56,6 +56,24 @@ describe('userActions', () => {
     test('logOutUser should call logOutUser with success', async () => {
       await store.dispatch(logOutUser());
       expect(logOutUserSuccess).toBeDefined();
+    });
+  });
+
+  describe('addTableNum', () => {
+    test('addTableNum should call axios.patch and resolve', async () => {
+      axios.patch.mockImplementationOnce(() => Promise.resolve({ data: null }));
+      const table = 1;
+      const user = {};
+      await store.dispatch(addTableNum(table, user));
+      expect(axios.patch).toHaveBeenCalled();
+    });
+
+    test('addTableNum should call axios.patch and reject', async () => {
+      axios.patch.mockImplementationOnce(() => Promise.reject());
+      const table = 1;
+      const user = {};
+      await store.dispatch(addTableNum(table, user));
+      expect(axios.patch).toHaveBeenCalled();
     });
   });
 });

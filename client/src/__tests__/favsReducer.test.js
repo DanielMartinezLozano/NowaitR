@@ -22,4 +22,9 @@ describe('productsReducer', () => {
     const action = { type: null, productsList: [] };
     expect(favsReducer(initialState, action)).toEqual({ });
   });
+
+  test('action.type null should return state default', () => {
+    const initialState = {};
+    expect(favsReducer(initialState)).toEqual({ });
+  });
 });
