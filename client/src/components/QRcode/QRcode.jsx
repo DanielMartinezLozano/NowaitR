@@ -52,7 +52,7 @@ function QRcode({ navigation, user, dispatch }) {
         <Pressable
           onPress={() => navigation.navigate('noqr')}
         >
-          <Text style={styles.problemsQR}>Introducir número de mesa manualmente</Text>
+          <Text style={styles.noAccessManually}>Introducir número de mesa manualmente</Text>
         </Pressable>
       </View>
     );

@@ -48,7 +48,7 @@ function Order({
         {!orderList.length
                 && <Text style={styles.noOrder}>¡Añade productos para hacer un pedido!</Text>}
         {orderList.map((item) => (
-          <View style={styles.productView} key={`${item.product.name}-saved`}>
+          <View style={styles.productView} key={Math.random() * Math.random()}>
             <View style={styles.buttons}>
               <TouchableOpacity
                 style={styles.button}
