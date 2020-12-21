@@ -81,6 +81,11 @@ const QRcodeStyles = StyleSheet.create({
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 3,
   },
+  noAccessManually: {
+    textAlign: 'center',
+    color: 'black',
+    textDecorationLine: 'underline',
+  },
 });
 
 export default QRcodeStyles;

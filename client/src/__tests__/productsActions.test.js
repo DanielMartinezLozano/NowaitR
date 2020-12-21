@@ -3,8 +3,8 @@ import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import {
   addFavProduct,
-  addOrderProduct, deleteOrderProduct, loadFavProductsList,
-  loadOrderProductsList, loadProductList, removeFavProduct,
+  addOrderProduct, clearOrder, deleteOrderProduct, loadFavProductsList,
+  loadOrderProductsList, loadProductList, removeFavProduct, sendOrder,
 } from '../redux/actions/productsActions';
 
 const middlewares = [thunk];
@@ -127,6 +127,37 @@ describe('productsActions test', () => {
       const product = { _id: 1 };
       const user = {};
       await store.dispatch(removeFavProduct(product, user));
+      expect(axios.delete).toHaveBeenCalled();
+    });
+  });
+
+  describe('sendOrder', () => {
+    test('sendOrder should call axios.put and resolve', async () => {
+      axios.put.mockImplementationOnce(() => Promise.resolve({ data: null }));
+      const user = {};
+      await store.dispatch(sendOrder(user));
+      expect(axios.put).toHaveBeenCalled();
+    });
+
+    test('sendOrder should call axios.put and reject with error', async () => {
+      axios.put.mockImplementationOnce(() => Promise.reject(Error));
+      const user = {};
+      await store.dispatch(sendOrder(user));
+      expect(axios.put).toHaveBeenCalled();
+    });
+  });
+
+  describe('clearOrder', () => {
+    test('clearOrder should call axios.delete and resolve', async () => {
+      axios.delete.mockImplementationOnce(() => Promise.resolve({ data: null }));
+      const user = {};
+      await store.dispatch(clearOrder(user));
+      expect(axios.delete).toHaveBeenCalled();
+    });
+
+    test('clearOrder should call axios.delete and reject with error', async () => {
+      axios.delete.mockImplementationOnce(() => Promise.reject(Error));
+      await store.dispatch(clearOrder());
       expect(axios.delete).toHaveBeenCalled();
     });
   });

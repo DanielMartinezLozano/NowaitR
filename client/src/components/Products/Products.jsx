@@ -79,6 +79,9 @@ function Products({
                       <Pressable
                         style={styles.heartIconPresseable}
                         onPress={() => dispatch(removeFavProduct(item, user))}
+                        hitSlop={{
+                          top: 10, bottom: 10, left: 10, right: 10,
+                        }}
                       >
                         <Image
                           source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4e2ccad234f1c1cdcdb7a/1c43ae6daee6fb15ce91fd7e5913d3fe/icons8-heart-144.png' }}
@@ -90,6 +93,9 @@ function Products({
                       <Pressable
                         style={styles.heartIconPresseable}
                         onPress={() => dispatch(addFavProduct(item, user))}
+                        hitSlop={{
+                          top: 10, bottom: 10, left: 10, right: 10,
+                        }}
                       >
                         <Image
                           source={{ uri: 'https://trello-attachments.s3.amazonaws.com/5fc4dc9893cb2246bcf25278/5fc4e2ccad234f1c1cdcdb7a/9a22821aaa623d2a36788d68a6c6e6f0/icons8-heart-144_c%C3%B2pia.png' }}
