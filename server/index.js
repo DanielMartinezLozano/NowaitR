@@ -9,11 +9,12 @@ const User = require('./src/models/userModel')
 const Product = require('./src/models/productModel')
 const productRouter = require('./src/routes/productRouter')(Product)
 const userRouter = require('./src/routes/UserRouter')(User)
+require('dotenv').config()
 
 const app = express()
 app.use(cors())
 const port = process.env.PORT || 4500
-const dataBaseURL = 'mongodb+srv://daniel:admin@nowaitr.w6gix.mongodb.net/NowaitR?retryWrites=true&w=majority'
+const dataBaseURL = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@nowaitr.w6gix.mongodb.net/NowaitR?retryWrites=true&w=majority`
 connect(dataBaseURL, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.use(morgan('tiny'))
